@@ -1,8 +1,7 @@
-package com.example.demo.appuser;
+package com.example.demo.user;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,45 +17,51 @@ import java.util.Collections;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
-public class AppUser implements UserDetails {
+public class User implements UserDetails {
 
     @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
+            name = "user_sequence",
+            sequenceName = "user_sequence",
             allocationSize = 1
     )
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
+            generator = "user_sequence"
     )
     private Long id;
-    @Getter
+
     private String firstName;
-    @Getter
     private String lastName;
+
+    // Added username field
+    private String username;
+
     private String email;
     private String password;
+
     @Enumerated(EnumType.STRING)
-    private AppUserRole appUserRole;
+    private UserRole userRole;
     private Boolean locked = false;
     private Boolean enabled = false;
 
-    public AppUser(String firstName,
-                   String lastName,
-                   String email,
-                   String password,
-                   AppUserRole appUserRole) {
+    public User(String firstName,
+                String lastName,
+                String username,  // Added username in constructor
+                String email,
+                String password,
+                UserRole userRole) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;  // Set username
         this.email = email;
         this.password = password;
-        this.appUserRole = appUserRole;
+        this.userRole = userRole;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
         return Collections.singletonList(authority);
     }
 
@@ -65,9 +70,14 @@ public class AppUser implements UserDetails {
         return password;
     }
 
+    // Keep email as username for Spring Security login, but we now have username too
     @Override
     public String getUsername() {
-        return email;
+        return email; // Use email for Spring Security
+    }
+
+    public String getUserUsername() {
+        return username; // Method to get actual username
     }
 
     @Override
