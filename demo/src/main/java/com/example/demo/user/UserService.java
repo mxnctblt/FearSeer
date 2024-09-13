@@ -1,4 +1,4 @@
-package com.example.demo.appuser;
+package com.example.demo.user;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     private final static String USER_NOT_FOUND_MESSAGE = "User with email %s not found";
-    private final UserRepository userRepository;
+    private final com.example.demo.user.UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -23,28 +23,28 @@ public class UserService implements UserDetailsService {
                 new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, email)));
     }
 
-    public String signUpUser(AppUser appUser) {
+    public String signUpUser(User user) {
         // Check if email already exists
-        boolean emailExists = userRepository.findByEmail(appUser.getEmail()).isPresent();
+        boolean emailExists = userRepository.findByEmail(user.getEmail()).isPresent();
         if (emailExists) {
             throw new IllegalStateException("Email already taken");
         }
 
         // Check if username already exists
-        boolean usernameExists = userRepository.findByUsername(appUser.getUsername()).isPresent();
+        boolean usernameExists = userRepository.findByUsername(user.getUsername()).isPresent();
         if (usernameExists) {
             throw new IllegalStateException("Username already taken");
         }
 
-        String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
-        appUser.setPassword(encodedPassword);
-        appUser.setEnabled(true);
-        userRepository.save(appUser);
+        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        user.setEnabled(true);
+        userRepository.save(user);
 
         return "User registered successfully";
     }
 
-    public Optional<AppUser> findByUsername(String username) {
+    public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 }
