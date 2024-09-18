@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
+
 import com.example.demo.movies.MovieService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -16,10 +18,19 @@ public class MovieController {
         this.movieService = movieService;
     }
 
+    // Display list of horror movies
     @GetMapping("/horror-movies")
     public String getHorrorMovies(Model model) {
         Map<String, Object> horrorMovies = movieService.getHorrorMovies();
         model.addAttribute("movies", horrorMovies.get("results"));
+        return "horror-movies";
+    }
+
+    // Search for Horror Movies by title
+    @GetMapping("/search")
+    public String SearchMovies(@RequestParam("query") String query, Model model) {
+        Map<String, Object> searchResults = movieService.searchHorrorMovies(query);
+        model.addAttribute("movies", searchResults.get("results"));
         return "horror-movies";
     }
 }
