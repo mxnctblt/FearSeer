@@ -21,3 +21,7 @@ spring:
     suffix: .html
     cache: false
     mode: HTML
+tmdb:
+  api:
+    key: 03507f6029f2a7be0aa7070556cf7424
+    url: https://api.themoviedb.org/3

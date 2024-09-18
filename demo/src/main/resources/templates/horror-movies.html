@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Horror Movies</title>
+</head>
+<body>
+<h1>Horror Movies</h1>
+<ul>
+    <li th:each="movie : ${movies}">
+        <h2 th:text="${movie['title']}"></h2>
+        <img th:src="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}" alt="Movie Poster">
+    </li>
+</ul>
+</body>
+</html>
