@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz for [[${movieTitle}]]</title>
+</head>
+<body>
+<h1>Quiz for [[${movieTitle}]]</h1>
+
+<form action="#" method="post">
+    <label>How many people will die?</label>
+    <input type="number" name="deathCount" required><br>
+
+    <label>Who will be the first to die?</label>
+    <input type="text" name="firstDeath" required><br>
+
+    <label>Who do you think will survive until the end?</label>
+    <input type="text" name="finalSurvivor" required><br>
+
+    <label>How many jump scares?</label>
+    <input type="number" name="jumpScares" required><br>
+
+    <label>What will the killer's weapon be?</label>
+    <input type="text" name="weapon" required><br>
+
+    <label>Creepy catchphrase?</label>
+    <input type="text" name="catchphrase" required><br>
+
+    <label>Romance or Death?</label>
+    <select name="romance" required>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select><br>
+
+    <button type="submit">Submit Quiz</button>
+</form>
+</body>
+</html>

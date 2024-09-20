@@ -45,17 +45,19 @@ public class User implements UserDetails {
 
     public User(String firstName,
                 String lastName,
-                String username,  // Added username in constructor
+                String username,
                 String email,
                 String password,
                 UserRole userRole) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = username;  // Set username
+        this.username = username;
         this.email = email;
         this.password = password;
         this.userRole = userRole;
     }
+
+    // For Spring Security's UserDetails interface
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -68,14 +70,14 @@ public class User implements UserDetails {
         return password;
     }
 
-    // Keep email as username for Spring Security login, but we now have username too
+    // Keep email as username for Spring Security login
     @Override
     public String getUsername() {
-        return email; // Use email for Spring Security
+        return email;
     }
 
     public String getUserUsername() {
-        return username; // Method to get actual username
+        return username;
     }
 
     @Override

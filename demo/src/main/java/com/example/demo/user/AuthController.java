@@ -1,8 +1,5 @@
-package com.example.demo.controller;
+package com.example.demo.user;
 
-import com.example.demo.user.UserService;
-import com.example.demo.user.User;
-import com.example.demo.user.UserRole;
 import com.example.demo.registration.RegistrationRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +11,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-
     private final UserService userService;
 
     public AuthController(UserService userService) {
@@ -51,9 +47,5 @@ public class AuthController {
             return "redirect:/auth/register";
         }
     }
-
-    @GetMapping("/")
-    public String home() {
-        return "index"; // Maps to src/main/resources/templates/index.html
-    }
 }
+

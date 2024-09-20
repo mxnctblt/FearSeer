@@ -1,7 +1,6 @@
-package com.example.demo.controller;
+package com.example.demo.movies;
 
 
-import com.example.demo.movies.MovieService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,11 +10,16 @@ import java.util.Map;
 
 @Controller
 public class MovieController {
-
     private final MovieService movieService;
 
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
+    }
+
+    // Display list of horror movies at root URL
+    @GetMapping("/")
+    public String home(Model model) {
+        return getHorrorMovies(model); // Redirect to the horror movies list
     }
 
     // Display list of horror movies
