@@ -1,0 +1,42 @@
+[
+  {
+    "movieTitle": "Halloween",
+    "deathCount": 5,
+    "firstDeath": "The nerd",
+    "finalSurvivor": "Laurie",
+    "jumpScares": 8,
+    "weapon": "Knife",
+    "catchphrase": "Don't go in there!",
+    "romance": "No"
+  },
+  {
+    "movieTitle": "The Conjuring",
+    "deathCount": 3,
+    "firstDeath": "The father",
+    "finalSurvivor": "Lorraine Warren",
+    "jumpScares": 12,
+    "weapon": "Ghostly force",
+    "catchphrase": "I can feel it watching me.",
+    "romance": "Yes, between the Warrens"
+  },
+  {
+    "movieTitle": "A Nightmare on Elm Street",
+    "deathCount": 5,
+    "firstDeath": "Tina",
+    "finalSurvivor": "Nancy",
+    "jumpScares": 10,
+    "weapon": "Razor glove",
+    "catchphrase": "1, 2, Freddy's coming for you...",
+    "romance": "No romantic subplot"
+  },
+  {
+    "movieTitle": "Scream",
+    "deathCount": 7,
+    "firstDeath": "The jock",
+    "finalSurvivor": "Sidney",
+    "jumpScares": 10,
+    "weapon": "Knife",
+    "catchphrase": "Who's there?",
+    "romance": "Yes"
+  }
+]
