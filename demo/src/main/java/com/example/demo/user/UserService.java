@@ -31,9 +31,15 @@ public class UserService implements UserDetailsService {
         }
 
         // Check if username already exists
-        boolean usernameExists = userRepository.findByUsername(user.getUsername()).isPresent();
+        boolean usernameExists = userRepository.findByUsername(user.getUserUsername()).isPresent();
         if (usernameExists) {
             throw new IllegalStateException("Username already taken");
+        }
+
+        // Check password strength
+        String passwordError = validatePassword(user.getPassword());
+        if (passwordError != null) {
+            throw new IllegalStateException(passwordError);
         }
 
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
@@ -43,11 +49,27 @@ public class UserService implements UserDetailsService {
         return "User registered successfully";
     }
 
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    private String validatePassword(String password) {
+        if (password.length() < 8) {
+            return "Password must be at least 8 characters long.";
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            return "Password must contain at least one uppercase letter.";
+        }
+        if (!password.matches(".*[a-z].*")) {
+            return "Password must contain at least one lowercase letter.";
+        }
+        if (!password.matches(".*[0-9].*")) {
+            return "Password must contain at least one number.";
+        }
+        if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+            return "Password must contain at least one special character.";
+        }
+        return null; // Password is strong
     }
+
     public Optional<User> findByEmail(String username) {
-        return userRepository.findByEmail(username); // Use findByEmail bc email is used for authentication
+        return userRepository.findByEmail(username);
     }
 
 }

@@ -20,11 +20,6 @@ public class RegistrationService {
             throw new IllegalStateException("Invalid email address");
         }
 
-        boolean usernameExists = userService.findByUsername(request.getUsername()).isPresent();
-        if (usernameExists) {
-            throw new IllegalStateException("Username already taken");
-        }
-
         userService.signUpUser(
                 new User(
                         request.getFirstName(),

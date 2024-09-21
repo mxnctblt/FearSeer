@@ -25,20 +25,20 @@ public class WebSecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/register", "/auth/login").permitAll() // Allow registration and login pages
-                        .anyRequest().authenticated() // All other requests require authentication
+                        .requestMatchers("/auth/register", "/auth/login").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/auth/login") // Custom login page
-                        .defaultSuccessUrl("/", true) // Redirect to home page after successful login
-                        .permitAll() // Allow access to login for everyone
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/auth/logout") // Custom logout URL
-                        .logoutSuccessUrl("/auth/login?logout") // Redirect to login page after logout
+                        .loginPage("/auth/login")
+                        .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
-                .authenticationProvider(daoAuthenticationProvider()); // Add custom authentication provider
+                .logout(logout -> logout
+                        .logoutUrl("/auth/logout")
+                        .logoutSuccessUrl("/auth/login?logout")
+                        .permitAll()
+                )
+                .authenticationProvider(daoAuthenticationProvider());
 
         return http.build();
     }

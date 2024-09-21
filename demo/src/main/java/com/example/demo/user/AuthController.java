@@ -28,7 +28,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute RegistrationRequest request, RedirectAttributes redirectAttributes) {
+    public String registerUser(@ModelAttribute RegistrationRequest request,
+                               RedirectAttributes redirectAttributes) {
         try {
             userService.signUpUser(
                     new User(
@@ -40,10 +41,16 @@ public class AuthController {
                             UserRole.USER
                     )
             );
-            redirectAttributes.addFlashAttribute("success", "Registration successful! Please log in.");
+            redirectAttributes.addFlashAttribute("success",
+                    "Registration successful! Please log in.");
             return "redirect:/auth/login";
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("error",
+                    "Registration failed: " + e.getMessage());
+            return "redirect:/auth/register";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Registration failed: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error",
+                    "An unexpected error occurred. Please try again.");
             return "redirect:/auth/register";
         }
     }
