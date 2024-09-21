@@ -86,4 +86,9 @@ public class MovieService {
         response.put("results", horrorMovies);
         return response;
     }
+
+    // Filter movies to only include those with quizzes available
+    public List<Map<String, Object>> getMoviesWithQuiz() {
+        return quizMovies;
+    }
 }

@@ -19,12 +19,6 @@ public class MovieController {
 
     // Display list of horror movies at root URL
     @GetMapping("/")
-    public String home(Model model) {
-        return getHorrorMovies(model); // Redirect to the horror movies list
-    }
-
-    // Display list of horror movies
-    @GetMapping("/horror-movies")
     public String getHorrorMovies(Model model) {
         Map<String, Object> horrorMovies = movieService.getHorrorMovies();
         List<String> quizMovieTitles = movieService.getQuizMovieTitles();
@@ -41,5 +35,14 @@ public class MovieController {
         model.addAttribute("movies", searchResults.get("results"));
         model.addAttribute("quizMovieTitles", quizMovieTitles);
         return "horror-movies";
+    }
+
+    // Display only horror movies with quizzes
+    @GetMapping("/horror-movies-with-quiz")
+    public String getHorrorMoviesWithQuiz(Model model) {
+        List<Map<String, Object>> moviesWithQuiz = movieService.getMoviesWithQuiz();
+
+        model.addAttribute("movies", moviesWithQuiz);
+        return "horror-movies-with-quiz";
     }
 }

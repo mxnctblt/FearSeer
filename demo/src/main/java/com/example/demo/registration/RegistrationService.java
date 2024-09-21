@@ -1,6 +1,6 @@
 package com.example.demo.registration;
 
-import com.example.demo.security.config.EmailValidator;
+import com.example.demo.security.EmailValidator;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRole;
 import com.example.demo.user.UserService;

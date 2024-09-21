@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Horror Movies with Quiz</title>
+</head>
+<body>
+<h1>Horror Movies with Quiz</h1>
+<!-- Logout Button -->
+<form th:action="@{/auth/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+<!-- Search form -->
+<form action="/search" method="GET">
+    <input type="text" name="query" placeholder="Search a movie..." required>
+    <button type="submit">Search</button>
+</form>
+
+<ul>
+    <li th:each="movie : ${movies}">
+        <h2 th:text="${movie['movieTitle']}"></h2>
+        <a th:href="@{/quiz/{movieTitle}(movieTitle=${movie['movieTitle']})}">Take Quiz</a>
+    </li>
+</ul>
+
+<p th:if="${#lists.isEmpty(movies)}">No movies available with quizzes.</p>
+</body>
+</html>
