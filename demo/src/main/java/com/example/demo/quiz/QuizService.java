@@ -29,14 +29,10 @@ public class QuizService {
     @PostConstruct
     public void loadQuizAnswers() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-
-        // Use ResourceLoader to load the resource from the classpath
         Resource resource = resourceLoader.getResource("classpath:movies_answers.json");
-
-        // Read the JSON data from the resource's input stream and store it in movieAnswers
         movieAnswers = mapper.readValue(
                 resource.getInputStream(),
-                new TypeReference<>() {}  // Simplified type reference as per the warning
+                new TypeReference<>() {}
         );
     }
 

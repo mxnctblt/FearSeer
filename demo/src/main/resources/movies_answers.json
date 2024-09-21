@@ -17,7 +17,7 @@
     "jumpScares": 12,
     "weapon": "Ghostly force",
     "catchphrase": "I can feel it watching me.",
-    "romance": "Yes, between the Warrens"
+    "romance": "Yes"
   },
   {
     "movieTitle": "A Nightmare on Elm Street",
@@ -27,7 +27,7 @@
     "jumpScares": 10,
     "weapon": "Razor glove",
     "catchphrase": "1, 2, Freddy's coming for you...",
-    "romance": "No romantic subplot"
+    "romance": "No"
   },
   {
     "movieTitle": "Scream",

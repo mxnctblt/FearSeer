@@ -1,11 +1,17 @@
 package com.example.demo.movies;
 
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,9 +26,32 @@ public class MovieService {
     private String tmdbApiUrl;
 
     private final RestTemplate restTemplate;
+    private final ResourceLoader resourceLoader;
+    private List<Map<String, Object>> quizMovies;
 
-    public MovieService(RestTemplate restTemplate) {
+
+    @Autowired
+    public MovieService(RestTemplate restTemplate, ResourceLoader resourceLoader) {
         this.restTemplate = restTemplate;
+        this.resourceLoader = resourceLoader;
+    }
+
+    // Load available quiz movie titles from JSON
+    @PostConstruct
+    public void loadQuizMovies() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        Resource resource = resourceLoader.getResource("classpath:movies_answers.json");
+        quizMovies = mapper.readValue(
+                resource.getInputStream(),
+                new TypeReference<>() {}
+        );
+    }
+
+    // Get list of movie titles with available quizzes
+    public List<String> getQuizMovieTitles() {
+        return quizMovies.stream()
+                .map(movie -> (String) movie.get("movieTitle"))
+                .collect(Collectors.toList());
     }
 
     // Get a list of Popular Horror Movies of the moment (Default)

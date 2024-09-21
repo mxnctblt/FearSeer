@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -26,7 +27,9 @@ public class MovieController {
     @GetMapping("/horror-movies")
     public String getHorrorMovies(Model model) {
         Map<String, Object> horrorMovies = movieService.getHorrorMovies();
+        List<String> quizMovieTitles = movieService.getQuizMovieTitles();
         model.addAttribute("movies", horrorMovies.get("results"));
+        model.addAttribute("quizMovieTitles", quizMovieTitles);
         return "horror-movies";
     }
 
@@ -34,7 +37,9 @@ public class MovieController {
     @GetMapping("/search")
     public String SearchMovies(@RequestParam("query") String query, Model model) {
         Map<String, Object> searchResults = movieService.searchHorrorMovies(query);
+        List<String> quizMovieTitles = movieService.getQuizMovieTitles();
         model.addAttribute("movies", searchResults.get("results"));
+        model.addAttribute("quizMovieTitles", quizMovieTitles);
         return "horror-movies";
     }
 }
