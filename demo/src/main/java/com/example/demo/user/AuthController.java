@@ -1,11 +1,12 @@
 package com.example.demo.user;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import com.example.demo.registration.RegistrationRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -18,13 +19,17 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String login() {
-        return "login"; // Maps to src/main/resources/templates/login.html
+    public String login(@RequestParam(value = "error", required = false) String error, Model model) {
+        if (error != null) {
+            model.addAttribute("error", "Invalid username or password.");
+        }
+        return "login";
     }
+
 
     @GetMapping("/register")
     public String register() {
-        return "register"; // Maps to src/main/resources/templates/register.html
+        return "register";
     }
 
     @PostMapping("/register")
@@ -54,5 +59,6 @@ public class AuthController {
             return "redirect:/auth/register";
         }
     }
+
 }
 
