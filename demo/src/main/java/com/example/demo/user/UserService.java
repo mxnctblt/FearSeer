@@ -49,4 +49,5 @@ public class UserService implements UserDetailsService {
     public Optional<User> findByEmail(String username) {
         return userRepository.findByEmail(username); // Use findByEmail bc email is used for authentication
     }
+
 }

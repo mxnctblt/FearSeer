@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
     List<Quiz> findByUser(User user);
+    Quiz findByUserAndMovieTitle(User user, String movieTitle);
 }

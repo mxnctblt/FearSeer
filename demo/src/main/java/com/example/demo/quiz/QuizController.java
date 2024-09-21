@@ -60,10 +60,11 @@ public class QuizController {
         // Calculate user score
         int score = quizService.calculateScore(userAnswers, correctAnswers);
 
-        // Save the quiz result to DB
+        // Find user by email (from Principal)
         User user = userService.findByEmail(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
+        // Create and save a new Quiz entity
         Quiz quiz = new Quiz();
         quiz.setMovieTitle(movieTitle);
         quiz.setDeathCountPrediction(Integer.parseInt(answers.get("deathCount")));
@@ -76,10 +77,41 @@ public class QuizController {
         quiz.setScore(score);
         quiz.setUser(user);
 
-        // Save to database (create a repository for `Quiz` model)
-        quizRepository.save(quiz);
+        // Save to database the userAnswer to the quiz
+        Quiz savedQuiz = quizRepository.save(quiz);
 
-        redirectAttributes.addFlashAttribute("score", score);
-        return "redirect:/quiz-result"; // Direct them to result page
+        // Redirect to the dynamic result page
+        return "redirect:/quiz/" + movieTitle + "/quiz-result/" + savedQuiz.getId();
+    }
+
+    @GetMapping("/{movieTitle}/quiz-result/{quizId}")
+    public String showQuizResult(
+            @PathVariable String movieTitle,
+            @PathVariable Long quizId,
+            Principal principal,
+            Model model
+            ) {
+        // Find user by email
+        User user = userService.findByEmail(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        // Find the quiz by its ID
+        Optional<Quiz> quizOptional = quizRepository.findById(quizId);
+
+        if (quizOptional.isEmpty() || !quizOptional.get().getUser().equals(user)) {
+            // Redirect to home if the quiz isn't found or doesn't belong to the user
+            return "redirect:/";
+        }
+        // Get the quiz
+        Quiz quiz = quizOptional.get();
+
+        // Get correct answers for the movie
+        Map<String, Object> correctAnswers = quizService.getAnswersForMovie(movieTitle);
+
+        // Pass data to the view
+        model.addAttribute("quiz", quiz);
+        model.addAttribute("correctAnswers", correctAnswers);
+
+        return "quiz-result"; // Renders quiz-result.html
     }
 }
