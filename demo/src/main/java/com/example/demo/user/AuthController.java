@@ -20,6 +20,10 @@ public class AuthController {
 
     @GetMapping("/login")
     public String login(@RequestParam(value = "error", required = false) String error, Model model) {
+        // Redirect if user is already authenticated
+        if (isAuthenticated()) {
+            return "redirect:/"; // Redirect to homepage or dashboard
+        }
         if (error != null) {
             model.addAttribute("error", "Invalid username or password.");
         }
@@ -29,6 +33,10 @@ public class AuthController {
 
     @GetMapping("/register")
     public String register() {
+        // Redirect if user is already authenticated
+        if (isAuthenticated()) {
+            return "redirect:/"; // Redirect to homepage or dashboard
+        }
         return "register";
     }
 
@@ -58,6 +66,11 @@ public class AuthController {
                     "An unexpected error occurred. Please try again.");
             return "redirect:/auth/register";
         }
+    }
+
+    private boolean isAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
     }
 
 }
