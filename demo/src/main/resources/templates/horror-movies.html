@@ -64,7 +64,7 @@
                     <div>
                         <h1 class="mb-3" style="color: #ffffff">Welcome to FearSeer</h1>
                         <h4 class="mb-3 text-danger">Click below to see the list of movies which have a quiz.</h4>
-                        <a data-mdb-ripple-init class="btn btn-outline-danger btn-lg" href="/horror-movies-with-quiz" role="button"
+                        <a data-mdb-ripple-init class="btn btn-danger btn-lg" href="/horror-movies-with-quiz" role="button"
                         >SEE LIST</a
                         >
                     </div>
@@ -72,35 +72,52 @@
             </div>
         </div>
     </header>
+    <!-- Content-->
+    <section class="vh-auto min-vh-100" style="background-color: #262626;">
+        <div class="container-fluid">
+            <div class="p-5 row d-flex justify-content-center align-items-center vh-auto">
+                <!-- Search form -->
+                <div class="d-flex justify-content-center">
+                    <form action="/search" method="GET">
+                        <div class="input-group m-4">
+                            <div class="form-outline me-2" data-mdb-input-init>
+                                <input type="text" name="query" id="form1" class="form-control text-white" />
+                                <label class="form-label text-white" for="form1">Search a movie...</label>
+                            </div>
+                            <button type="submit" class="btn btn-danger" data-mdb-ripple-init>
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Popular Movies -->
+                <h1 class="m-2 text-white">Popular Movies :</h1>
+                <ul style="list-style-type: none;" class="d-flex justify-content-center row">
+                    <li th:each="movie : ${movies}" class="card m-4 vh-auto col-3 p-2 d-flex justify-content-center align-items-center bg-dark" >
+                        <div>
+                            <h4 th:text="${movie['title']}" class="d-flex justify-content-center rounded m-3 p-1 text-black text-bg-danger"></h4>
+                            <div class="d-flex justify-content-center
+">
+                                <img th:src="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}" alt="Movie Poster"
+                                class="rounded" height="370" width="270">
+                            </div>
 
-    <h1>HomePage</h1>
-    <a href="/horror-movies-with-quiz">View Movies with Quizzes</a>
-    <!-- Logout Button -->
-    <form th:action="@{/auth/logout}" method="post">
-        <button type="submit">Logout</button>
-    </form>
-    <!-- Search form -->
-    <form action="/search" method="GET">
-        <input type="text" name="query" placeholder="Search a movie..." required>
-        <button type="submit">Search</button>
-    </form>
+                            <!-- Conditionally show the button or message based on quiz availability -->
+                            <div th:if="${quizMovieTitles.contains(movie['title'])}">
+                                <a th:href="@{/quiz/{movieTitle}(movieTitle=${movie['title']})}"
+                                   class="btn btn-outline-danger d-flex justify-content-center m-2">Take Quiz</a>
+                            </div>
+                            <div th:unless="${quizMovieTitles.contains(movie['title'])}">
+                                <p class="text-black m-2 d-flex justify-content-center">Quiz doesn't exist yet</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
 
-    <ul>
-        <li th:each="movie : ${movies}">
-            <h2 th:text="${movie['title']}"></h2>
-            <img th:src="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}" alt="Movie Poster">
-
-            <!-- Conditionally show the button or message based on quiz availability -->
-            <div th:if="${quizMovieTitles.contains(movie['title'])}">
-                <a th:href="@{/quiz/{movieTitle}(movieTitle=${movie['title']})}">Take Quiz</a>
+                <p th:if="${movies.size() == 0}">No results found for your search</p>
             </div>
-            <div th:unless="${quizMovieTitles.contains(movie['title'])}">
-                <p>Quiz doesn't exist yet</p>
-            </div>
-        </li>
-    </ul>
-
-    <p th:if="${movies.size() == 0}">No results found for your search</p>
+        </div>
+    </section>
     <!-- MDB JS -->
     <script
             type="text/javascript"
@@ -109,7 +126,7 @@
 
     <footer class="bg-body-tertiary bg-danger text-center text-lg-start">
         <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgba(10, 0, 0, 0.05);">
+        <div class="text-center text-black p-3" style="background-color: rgba(10, 0, 0, 0.05);">
             © 2024 Copyright: FearSeer
         </div>
         <!-- Copyright -->
