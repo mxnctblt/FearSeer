@@ -1,27 +1,108 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>FearSeer - Horror Movies with Quiz</title>
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css"
+            rel="stylesheet"
+    />
+    <!-- FAVICON -->
+    <link rel="icon" type="media/x-icon" href="/media/favicon.ico" />
 </head>
 <body>
-<h1>Horror Movies with Quiz</h1>
-<!-- Logout Button -->
-<form th:action="@{/auth/logout}" method="post">
-    <button type="submit">Logout</button>
-</form>
-<!-- Search form -->
-<form action="/search" method="GET">
-    <input type="text" name="query" placeholder="Search a movie..." required>
-    <button type="submit">Search</button>
-</form>
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg" style="background-color: #262626">
+            <div class="container-fluid">
+                <!-- Left element -->
+                <div class="d-flex align-items-center">
+                    <a class="navbar-brand me-5" aria-current="page" href="/">
+                        <img th:src="@{/media/logoFearSeer.png}" class="rounded me-3" height="35" alt="FearSeer Logo" loading="lazy" />
+                        <strong class="text-danger">FearSeer</strong>
+                    </a>
+                </div>
+                <!-- Right element -->
+                <div class="d-flex align-items-center">
+                    <a class="navbar-brand me-3 text-danger" aria-current="page" href="/">
+                        Home
+                    </a>
+                    <a class="navbar-brand me-4 text-danger" href="/">
+                        About
+                    </a>
+                    <a class="navbar-brand me-4 text-danger" aria-current="page" href="/horror-movies-with-quiz">
+                        Movies with Quiz
+                    </a>
+                    <!-- Logout Button -->
+                    <form th:action="@{/auth/logout}" method="post">
+                        <button type="submit" class="btn btn-outline-danger ms-2">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <!-- Background image -->
+        <div
+                class="p-5 text-center bg-image"
+                style="
+              background-image: url('/media/homepageBanner.jpg');
+              height: 400px;
+            "
+        >
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div>
+                        <h1 class="mb-3" style="color: #ffffff">List of Movies with Quiz</h1>
+                        <h4 class="mb-3 text-danger">Search for a movie in particular</h4>
+                        <a data-mdb-ripple-init class="btn btn-outline-danger btn-lg" href="/horror-movies-with-quiz" role="button"
+                        >Search</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <h1>Horror Movies with Quiz</h1>
+    <!-- Logout Button -->
+    <form th:action="@{/auth/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+    <!-- Search form -->
+    <form action="/search" method="GET">
+        <input type="text" name="query" placeholder="Search a movie..." required>
+        <button type="submit">Search</button>
+    </form>
 
-<ul>
-    <li th:each="movie : ${movies}">
-        <h2 th:text="${movie['movieTitle']}"></h2>
-        <a th:href="@{/quiz/{movieTitle}(movieTitle=${movie['movieTitle']})}">Take Quiz</a>
-    </li>
-</ul>
+    <ul>
+        <li th:each="movie : ${movies}">
+            <h2 th:text="${movie['movieTitle']}"></h2>
+            <a th:href="@{/quiz/{movieTitle}(movieTitle=${movie['movieTitle']})}">Take Quiz</a>
+        </li>
+    </ul>
 
-<p th:if="${#lists.isEmpty(movies)}">No movies available with quizzes.</p>
+    <p th:if="${#lists.isEmpty(movies)}">No movies available with quizzes.</p>
+    <!-- MDB JS -->
+    <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
+    ></script>
+
+    <footer class="bg-body-tertiary bg-danger text-center text-lg-start">
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(10, 0, 0, 0.05);">
+            © 2024 Copyright: FearSeer
+        </div>
+        <!-- Copyright -->
+    </footer>
 </body>
 </html>
