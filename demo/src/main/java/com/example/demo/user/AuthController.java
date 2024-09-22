@@ -1,5 +1,6 @@
 package com.example.demo.user;
 
+import com.example.demo.movies.MovieService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,9 +14,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/auth")
 public class AuthController {
     private final UserService userService;
+    private final MovieService movieService;
 
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, MovieService movieService) {
         this.userService = userService;
+        this.movieService = movieService;
     }
 
     @GetMapping("/login")
@@ -32,11 +35,13 @@ public class AuthController {
 
 
     @GetMapping("/register")
-    public String register() {
+    public String register(Model model) {
         // Redirect if user is already authenticated
         if (isAuthenticated()) {
             return "redirect:/"; // Redirect to homepage or dashboard
         }
+        String firstHorrorMoviePoster = movieService.getFirstHorrorMoviePoster();
+        model.addAttribute("posterUrl", firstHorrorMoviePoster);
         return "register";
     }
 

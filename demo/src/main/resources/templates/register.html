@@ -2,31 +2,100 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8">
-    <title>FearSeer - Sign up</title>
+    <title>Register - FearSeer</title>
     <link rel="stylesheet" href="/styles.css">
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css"
+            rel="stylesheet"
+    />
+    <!-- FAVICON -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
 </head>
 <body>
-<h2>Register</h2>
 <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+<section class="vh-auto bg-dark" >
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card card-registration my-4">
+                    <div class="row g-0">
+                        <div class="col-xl-6 d-none d-xl-block">
+                            <img th:src="${posterUrl}" alt="Horror Movie Poster" class="img-fluid"
+                                 style="border-top-left-radius: .40rem; border-bottom-left-radius: .40rem;"/>
+                        </div>
 
-<form action="#" method="post">
-    <label for="firstName">First Name:</label>
-    <input type="text" id="firstName" name="firstName" required>
-    <br>
-    <label for="lastName">Last Name:</label>
-    <input type="text" id="lastName" name="lastName" required>
-    <br>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-    <br>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <button type="submit">Register</button>
-</form>
-<a href="/auth/login">Login</a>
+                        <div class="col-xl-6 d-flex justify-content-center align-items-center">
+                            <div class="card-body p-md-10">
+                                <div class="d-flex flex-row mb-5 text-uppercase">
+                                    <h1 class="pe-3">Register to </h1>
+                                    <h1 class="text-danger">FearSeer</h1>
+                                </div>
+                                <form action="#" method="post">
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <input type="text" id="firstName" name="firstName" class="form-control form-control-lg" />
+                                        <label class="form-label" for="firstName">First name</label>
+                                    </div>
+
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <input type="text" id="lastName" name="lastName" class="form-control form-control-lg" />
+                                        <label class="form-label" for="lastName">Last name</label>
+                                    </div>
+
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <input type="text" id="username" name="username" class="form-control form-control-lg" />
+                                        <label class="form-label" for="username">Username</label>
+                                    </div>
+
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <input type="text" id="email" name="email" class="form-control form-control-lg" required>
+                                        <label class="form-label" for="email">Email</label>
+                                    </div>
+
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <input type="password" id="password" name="password" class="form-control form-control-lg" />
+                                        <label class="form-label" for="password">Password</label>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center pt-3">
+                                        <button type="reset" data-mdb-button-init data-mdb-ripple-init class="btn btn-secondary-black btn-lg">Reset all</button>
+                                        <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-danger btn-lg ms-2">Register</button>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center align-items-center pt-3 text-black">
+                                        <p class="mb-0">Already registered? <a href="/auth/login" class="link-danger">Login</a>
+                                        </p>
+                                    </div>
+                                    <!-- MDB -->
+                                    <script
+                                            type="text/javascript"
+                                            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
+                                    ></script>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 </body>
+<footer class="bg-body-tertiary bg-danger text-center text-lg-start">
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(10, 0, 0, 0.05);">
+        © 2024 Copyright: FearSeer
+    </div>
+    <!-- Copyright -->
+</footer>
 </html>

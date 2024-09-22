@@ -91,4 +91,16 @@ public class MovieService {
     public List<Map<String, Object>> getMoviesWithQuiz() {
         return quizMovies;
     }
+
+    public String getFirstHorrorMoviePoster() {
+        Map<String, Object> horrorMovies = getHorrorMovies();
+        List<Map<String, Object>> results = (List<Map<String, Object>>) horrorMovies.get("results");
+
+        if (!results.isEmpty()) {
+            Map<String, Object> firstMovie = results.get(0);
+            String posterPath = (String) firstMovie.get("poster_path");
+            return "https://image.tmdb.org/t/p/w500" + posterPath; // Construct the full URL
+        }
+        return null; // Return null if no movies found
+    }
 }
