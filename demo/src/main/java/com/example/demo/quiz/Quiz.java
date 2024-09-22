@@ -1,7 +1,14 @@
 package com.example.demo.quiz;
 
 import com.example.demo.user.User;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,16 +32,19 @@ public class Quiz {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;  // Link the quiz to a user
+    private User user;
 
-    private String movieTitle; // The movie this quiz is about
+    private String movieTitle;
     private int deathCountPrediction;
-    private String firstDeathPrediction;
-    private String finalSurvivorPrediction;
+    private int lifeCountPrediction;
+    private String mainCharacterPrediction;
     private int jumpScarePrediction;
-    private String weaponPrediction;
-    private String catchphrasePrediction;
     private String romancePrediction;
+    private String bloodPrediction;
+    private String finalGirlPrediction;
+    private String creakingPrediction;
+    private String weaponPrediction;
+    private String killerPrediction;
     private int score;
 
 }

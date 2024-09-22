@@ -11,25 +11,62 @@
     <label>How many people will die?</label>
     <input type="number" name="deathCount" required><br>
 
-    <label>Who will be the first to die?</label>
-    <input type="text" name="firstDeath" required><br>
+    <label>How many people will survive?</label>
+    <input type="number" name="lifeCount" required><br>
 
-    <label>Who do you think will survive until the end?</label>
-    <input type="text" name="finalSurvivor" required><br>
+    <label>Will the main character survive?</label>
+    <select name="mainCharacter" required>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select><br>
 
-    <label>How many jump scares?</label>
+    <label>How many jumpscares?</label>
     <input type="number" name="jumpScares" required><br>
 
-    <label>What will the killer's weapon be?</label>
-    <input type="text" name="weapon" required><br>
-
-    <label>Creepy catchphrase?</label>
-    <input type="text" name="catchphrase" required><br>
-
-    <label>Romance or Death?</label>
+    <label>Will there be a bit of Romance too?</label>
     <select name="romance" required>
         <option value="Yes">Yes</option>
         <option value="No">No</option>
+    </select><br>
+
+    <label>Will there be a lot of blood?</label>
+    <select name="blood" required>
+        <option value="Yes, obviously">Yes, obviously</option>
+        <option value="No">No</option>
+    </select><br>
+
+    <label>Is there going to be the classic final girl?</label>
+    <select name="finalGirl" required>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select><br>
+
+    <label>Will there be a lot of creaking, squeaking, and grinding?</label>
+    <select name="creaking" required>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select><br>
+
+    <label>What is the weapon of choice?</label>
+    <select name="weapon" required>
+        <option value="Gun">Gun</option>
+        <option value="Knife">Knife</option>
+        <option value="Sword">Sword</option>
+        <option value="Supernatural Force">Supernatural Force</option>
+        <option value="Mind Control">Mind Control</option>
+        <option value="Other">Other</option>
+    </select><br>
+
+    <label>Who or what is the killer?</label>
+    <select name="killer" required>
+        <option value="Alien">Alien</option>
+        <option value="Ghost">Ghost</option>
+        <option value="Monster">Monster</option>
+        <option value="Demon">Demon</option>
+        <option value="Human">Human</option>
+        <option value="Undead">Undead</option>
+        <option value="Doll">Doll</option>
+        <option value="Other">Other</option>
     </select><br>
 
     <button type="submit">Submit Quiz</button>

@@ -19,13 +19,11 @@ public class QuizService {
     private final ResourceLoader resourceLoader;
     private List<Map<String, Object>> movieAnswers;
 
-    // Autowire the ResourceLoader to load resources from the classpath
     @Autowired
     public QuizService(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
 
-    // This method is automatically called after the service is initialized
     @PostConstruct
     public void loadQuizAnswers() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -40,20 +38,23 @@ public class QuizService {
         return movieAnswers.stream()
                 .filter(movie -> movie.get("movieTitle").equals(title))
                 .findFirst()
-                .orElse(null); // Return null if the movie isn't found
+                .orElse(null);
     }
 
     public int calculateScore(Map<String, Object> userAnswers, Map<String, Object> correctAnswers) {
         int score = 0;
 
         if (userAnswers.get("deathCount").equals(correctAnswers.get("deathCount"))) score++;
-        if (userAnswers.get("firstDeath").equals(correctAnswers.get("firstDeath"))) score++;
-        if (userAnswers.get("finalSurvivor").equals(correctAnswers.get("finalSurvivor"))) score++;
+        if (userAnswers.get("lifeCount").equals(correctAnswers.get("lifeCount"))) score++;
+        if (userAnswers.get("mainCharacter").equals(correctAnswers.get("mainCharacter"))) score++;
         if (userAnswers.get("jumpScares").equals(correctAnswers.get("jumpScares"))) score++;
-        if (userAnswers.get("weapon").equals(correctAnswers.get("weapon"))) score++;
-        if (userAnswers.get("catchphrase").equals(correctAnswers.get("catchphrase"))) score++;
         if (userAnswers.get("romance").equals(correctAnswers.get("romance"))) score++;
+        if (userAnswers.get("blood").equals(correctAnswers.get("blood"))) score++;
+        if (userAnswers.get("finalGirl").equals(correctAnswers.get("finalGirl"))) score++;
+        if (userAnswers.get("creaking").equals(correctAnswers.get("creaking"))) score++;
+        if (userAnswers.get("weapon").equals(correctAnswers.get("weapon"))) score++;
+        if (userAnswers.get("killer").equals(correctAnswers.get("killer"))) score++;
 
-        return score; // 7 is the max score
+        return score;
     }
 }

@@ -32,29 +32,32 @@ public class QuizController {
 
     @GetMapping("/{movieTitle}")
     public String showQuiz(@PathVariable String movieTitle, Model model) {
-        model.addAttribute("movieTitle", movieTitle); // Pass the movie title to the form
-        return "quiz-form"; // This will map to src/main/resources/templates/quiz-form.html
+        model.addAttribute("movieTitle", movieTitle);
+        return "quiz-form";
     }
 
     @PostMapping("/{movieTitle}")
     public String submitQuiz(
             @PathVariable String movieTitle,
-            @RequestParam Map<String, String> answers, // Collect all form fields
+            @RequestParam Map<String, String> answers,
             RedirectAttributes redirectAttributes,
             Principal principal
     ) {
         // Get correct answers from the JSON
         Map<String, Object> correctAnswers = quizService.getAnswersForMovie(movieTitle);
 
-        // Convert user's answers (from Map<String, String> to Map<String, Object>)
+        // Convert user's answers
         Map<String, Object> userAnswers = Map.of(
                 "deathCount", Integer.parseInt(answers.get("deathCount")),
-                "firstDeath", answers.get("firstDeath"),
-                "finalSurvivor", answers.get("finalSurvivor"),
+                "lifeCount", Integer.parseInt(answers.get("lifeCount")),
+                "mainCharacter", answers.get("mainCharacter"),
                 "jumpScares", Integer.parseInt(answers.get("jumpScares")),
+                "romance", answers.get("romance"),
+                "blood", answers.get("blood"),
+                "finalGirl", answers.get("finalGirl"),
+                "creaking", answers.get("creaking"),
                 "weapon", answers.get("weapon"),
-                "catchphrase", answers.get("catchphrase"),
-                "romance", answers.get("romance")
+                "killer", answers.get("killer")
         );
 
         // Calculate user score
@@ -68,19 +71,20 @@ public class QuizController {
         Quiz quiz = new Quiz();
         quiz.setMovieTitle(movieTitle);
         quiz.setDeathCountPrediction(Integer.parseInt(answers.get("deathCount")));
-        quiz.setFirstDeathPrediction(answers.get("firstDeath"));
-        quiz.setFinalSurvivorPrediction(answers.get("finalSurvivor"));
+        quiz.setLifeCountPrediction(Integer.parseInt(answers.get("lifeCount")));
+        quiz.setMainCharacterPrediction(answers.get("mainCharacter"));
         quiz.setJumpScarePrediction(Integer.parseInt(answers.get("jumpScares")));
-        quiz.setWeaponPrediction(answers.get("weapon"));
-        quiz.setCatchphrasePrediction(answers.get("catchphrase"));
         quiz.setRomancePrediction(answers.get("romance"));
+        quiz.setBloodPrediction(answers.get("blood"));
+        quiz.setFinalGirlPrediction(answers.get("finalGirl"));
+        quiz.setCreakingPrediction(answers.get("creaking"));
+        quiz.setWeaponPrediction(answers.get("weapon"));
+        quiz.setKillerPrediction(answers.get("killer"));
         quiz.setScore(score);
         quiz.setUser(user);
 
-        // Save to database the userAnswer to the quiz
         Quiz savedQuiz = quizRepository.save(quiz);
 
-        // Redirect to the dynamic result page
         return "redirect:/quiz/" + movieTitle + "/quiz-result/" + savedQuiz.getId();
     }
 
@@ -90,28 +94,23 @@ public class QuizController {
             @PathVariable Long quizId,
             Principal principal,
             Model model
-            ) {
-        // Find user by email
+    ) {
         User user = userService.findByEmail(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        // Find the quiz by its ID
         Optional<Quiz> quizOptional = quizRepository.findById(quizId);
 
         if (quizOptional.isEmpty() || !quizOptional.get().getUser().equals(user)) {
-            // Redirect to home if the quiz isn't found or doesn't belong to the user
             return "redirect:/";
         }
-        // Get the quiz
+
         Quiz quiz = quizOptional.get();
 
-        // Get correct answers for the movie
         Map<String, Object> correctAnswers = quizService.getAnswersForMovie(movieTitle);
 
-        // Pass data to the view
         model.addAttribute("quiz", quiz);
         model.addAttribute("correctAnswers", correctAnswers);
 
-        return "quiz-result"; // Renders quiz-result.html
+        return "quiz-result";
     }
 }

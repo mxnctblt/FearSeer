@@ -16,13 +16,11 @@
         }
     </style>
     <script>
-        // Function to toggle the score section visibility
         function toggleScore() {
             const scoreSection = document.getElementById('scoreSection');
             scoreSection.style.display = (scoreSection.style.display === 'none' || scoreSection.style.display === '') ? 'block' : 'none';
         }
 
-        // Function to toggle the answers section visibility
         function toggleAnswers() {
             const answersSection = document.getElementById('answersSection');
             answersSection.style.display = (answersSection.style.display === 'none' || answersSection.style.display === '') ? 'block' : 'none';
@@ -32,20 +30,15 @@
 <body>
 <h1 th:text="'Your Quiz Result for ' + ${quiz.movieTitle}">Your Quiz Result</h1>
 
-<!-- Introduction asking if the user is ready to see the score and answers -->
 <p>Have you watched the movie yet? Are you ready to see your score? Check the correct answers below!</p>
 
-<!-- Button to reveal the score -->
 <button onclick="toggleScore()">See Your Score</button>
-<!-- Button to reveal the correct answers -->
 <button onclick="toggleAnswers()">See Correct Answers</button>
 
-<!-- Section for the user's score, initially hidden -->
 <div id="scoreSection">
-    <p th:text="'You scored ' + ${quiz.score} + ' out of 7!'">You scored: X out of 7</p>
+    <p th:text="'You scored ' + ${quiz.score} + ' out of 10 (' + (${quiz.score} * 10) + '%)'">You scored: X out of 10 (Y%)</p>
 </div>
 
-<!-- Section for the correct answers, initially hidden -->
 <div id="answersSection">
     <h2>Here are the correct answers:</h2>
     <ul>
@@ -56,16 +49,16 @@
             <span th:text="${correctAnswers.deathCount}">0</span>
         </li>
         <li>
-            <strong>First Death:</strong> Your answer:
-            <span th:text="${quiz.firstDeathPrediction}">N/A</span> |
+            <strong>Survivors:</strong> Your answer:
+            <span th:text="${quiz.lifeCountPrediction}">0</span> |
             Correct answer:
-            <span th:text="${correctAnswers.firstDeath}">N/A</span>
+            <span th:text="${correctAnswers.lifeCount}">0</span>
         </li>
         <li>
-            <strong>Final Survivor:</strong> Your answer:
-            <span th:text="${quiz.finalSurvivorPrediction}">N/A</span> |
+            <strong>Main Character Survives:</strong> Your answer:
+            <span th:text="${quiz.mainCharacterPrediction}">No</span> |
             Correct answer:
-            <span th:text="${correctAnswers.finalSurvivor}">N/A</span>
+            <span th:text="${correctAnswers.mainCharacter}">No</span>
         </li>
         <li>
             <strong>Jump Scares:</strong> Your answer:
@@ -74,22 +67,40 @@
             <span th:text="${correctAnswers.jumpScares}">0</span>
         </li>
         <li>
+            <strong>Romance:</strong> Your answer:
+            <span th:text="${quiz.romancePrediction}">No</span> |
+            Correct answer:
+            <span th:text="${correctAnswers.romance}">No</span>
+        </li>
+        <li>
+            <strong>Blood:</strong> Your answer:
+            <span th:text="${quiz.bloodPrediction}">No</span> |
+            Correct answer:
+            <span th:text="${correctAnswers.blood}">No</span>
+        </li>
+        <li>
+            <strong>Final Girl:</strong> Your answer:
+            <span th:text="${quiz.finalGirlPrediction}">No</span> |
+            Correct answer:
+            <span th:text="${correctAnswers.finalGirl}">No</span>
+        </li>
+        <li>
+            <strong>Creaking:</strong> Your answer:
+            <span th:text="${quiz.creakingPrediction}">No</span> |
+            Correct answer:
+            <span th:text="${correctAnswers.creaking}">No</span>
+        </li>
+        <li>
             <strong>Weapon:</strong> Your answer:
             <span th:text="${quiz.weaponPrediction}">N/A</span> |
             Correct answer:
             <span th:text="${correctAnswers.weapon}">N/A</span>
         </li>
         <li>
-            <strong>Catchphrase:</strong> Your answer:
-            <span th:text="${quiz.catchphrasePrediction}">N/A</span> |
+            <strong>Killer:</strong> Your answer:
+            <span th:text="${quiz.killerPrediction}">N/A</span> |
             Correct answer:
-            <span th:text="${correctAnswers.catchphrase}">N/A</span>
-        </li>
-        <li>
-            <strong>Romance:</strong> Your answer:
-            <span th:text="${quiz.romancePrediction}">N/A</span> |
-            Correct answer:
-            <span th:text="${correctAnswers.romance}">N/A</span>
+            <span th:text="${correctAnswers.killer}">N/A</span>
         </li>
     </ul>
 </div>
