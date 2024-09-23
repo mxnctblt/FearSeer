@@ -3,73 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <title>FearSeer - Quiz for [[${movieTitle}]]</title>
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css"
+            rel="stylesheet"
+    />
+    <!-- FAVICON -->
+    <link rel="icon" type="media/x-icon" href="/media/favicon.ico" />
 </head>
 <body>
-<h1>Quiz for [[${movieTitle}]]</h1>
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg" style="background-color: #262626">
+            <div class="container-fluid">
+                <!-- Left element -->
+                <div class="d-flex align-items-center">
+                    <a class="navbar-brand me-5" aria-current="page" href="/">
+                        <img th:src="@{/media/logoFearSeer.png}" class="rounded me-3" height="35" alt="FearSeer Logo" loading="lazy" />
+                        <strong class="text-danger">FearSeer</strong>
+                    </a>
+                </div>
+                <!-- Right element -->
+                <div class="d-flex align-items-center">
+                    <a class="navbar-brand me-3 text-danger" aria-current="page" href="/">
+                        Home
+                    </a>
+                    <a class="navbar-brand me-4 text-danger" href="/">
+                        About
+                    </a>
+                    <a class="navbar-brand me-4 text-danger" href="/horror-movies-with-quiz">
+                        Movies with Quiz
+                    </a>
+                    <!-- Logout Button -->
+                    <form th:action="@{/auth/logout}" method="post">
+                        <button type="submit" class="btn btn-outline-danger ms-2">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <!-- Background image -->
+        <div
+                class="p-5 text-center bg-image"
+                style="
+              background-image: url('/media/homepageBanner.jpg');
+              height: 400px;
+            "
+        >
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div>
+                        <h1 class="mb-3" style="color: #ffffff">Quiz for [[${movieTitle}]]</h1>
+                        <h4 class="mb-3 text-white">Will you be able to predict what will happen?</h4>
+                        <a data-mdb-ripple-init class="btn btn-danger btn-lg" href="/" role="button"
+                        >Go Back to Home</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="vh-aut min-vh-100" style="background-color: #262626;">
+        <div class="container-fluid d-flex justify-content-center align-items-center">
+            <div class="p-5 col-9">
+                <div class="card bg-danger p-5 m-4 d-flex justify-content-center align-items-center">
+                    <h1 class="m-2 mb-5 text-white p-3 rounded" style="background-color: #262626;">Quiz for: [[${movieTitle}]]</h1>
 
-<form action="#" method="post">
-    <label>How many people will die?</label>
-    <input type="number" name="deathCount" required><br>
+                    <form action="#" method="post" class="text-black">
+                        <ul style="list-style-type: none;">
+                            <li class="mb-4">
+                                <label class="form-label text-black" for="deathCount">
+                                    <strong>How many people will die?</strong>
+                                </label>
+                                <input type="number" class="form-control text-black" name="deathCount" id="deathCount" required="required">
+                            </li>
 
-    <label>How many people will survive?</label>
-    <input type="number" name="lifeCount" required><br>
+                            <li class="mb-3">
+                                <label class="form-label text-black" for="lifeCount">
+                                    <strong>How many people will survive?</strong>
+                                </label>
+                                <input type="number" class="form-control text-black" name="lifeCount" id="lifeCount" required="required">
+                            </li>
 
-    <label>Will the main character survive?</label>
-    <select name="mainCharacter" required>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select><br>
+                            <li class="mb-3">
+                                <label class="form-label text-black" for="mainCharacter">
+                                    <strong>Will the main character survive?</strong>
+                                </label>
+                                <select name="mainCharacter" class="form-control text-black" id="mainCharacter" required="required">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </li>
 
-    <label>How many jumpscares?</label>
-    <input type="number" name="jumpScares" required><br>
+                            <li class="mb-3">
+                                <label class="form-label text-black" for="jumpScares">
+                                    <strong>How many jumpscares?</strong>
+                                </label>
+                                <input type="number" class="form-control text-black" name="jumpScares" id="jumpScares" required="required">
+                            </li>
 
-    <label>Will there be a bit of Romance too?</label>
-    <select name="romance" required>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select><br>
+                            <li class="mb-3">
+                                <label class="form-label text-black" for="romance">
+                                    <strong>Will there be a bit of Romance too?</strong>
+                                </label>
+                                <select name="romance" class="form-control text-black" id="romance" required="required">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </li>
 
-    <label>Will there be a lot of blood?</label>
-    <select name="blood" required>
-        <option value="Yes, obviously">Yes, obviously</option>
-        <option value="No">No</option>
-    </select><br>
+                            <li class="mb-3">
+                                <label class="form-label text-black" for="blood">
+                                    <strong>Will there be a lot of blood?</strong>
+                                </label>
+                                <select name="blood" class="form-control text-black" id="blood" required="required">
+                                    <option value="Yes, obviously">Yes, obviously</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </li>
 
-    <label>Is there going to be the classic final girl?</label>
-    <select name="finalGirl" required>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select><br>
+                            <li class="mb-3">
+                                <label class="form-label text-black" for="finalGirl">
+                                    <strong>Is there going to be the classic final girl?</strong>
+                                </label>
+                                <select name="finalGirl" class="form-control text-black" id="finalGirl" required="required">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </li>
 
-    <label>Will there be a lot of creaking, squeaking, and grinding?</label>
-    <select name="creaking" required>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select><br>
+                            <li class="mb-3">
+                                <label class="form-label text-black" for="creaking">
+                                    <strong>Will there be a lot of creaking, squeaking, and grinding?</strong>
+                                </label>
+                                <select name="creaking" class="form-control text-black" id="creaking" required="required">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </li>
 
-    <label>What is the weapon of choice?</label>
-    <select name="weapon" required>
-        <option value="Gun">Gun</option>
-        <option value="Knife">Knife</option>
-        <option value="Sword">Sword</option>
-        <option value="Supernatural Force">Supernatural Force</option>
-        <option value="Mind Control">Mind Control</option>
-        <option value="Other">Other</option>
-    </select><br>
+                            <li class="mb-3">
+                                <label class="form-label text-black" for="weapon">
+                                    <strong>What is the weapon of choice?</strong>
+                                </label>
+                                <select name="weapon" class="form-control text-black" id="weapon" required="required">
+                                    <option value="Gun">Gun</option>
+                                    <option value="Knife">Knife</option>
+                                    <option value="Sword">Sword</option>
+                                    <option value="Supernatural Force">Supernatural Force</option>
+                                    <option value="Mind Control">Mind Control</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </li>
 
-    <label>Who or what is the killer?</label>
-    <select name="killer" required>
-        <option value="Alien">Alien</option>
-        <option value="Ghost">Ghost</option>
-        <option value="Monster">Monster</option>
-        <option value="Demon">Demon</option>
-        <option value="Human">Human</option>
-        <option value="Undead">Undead</option>
-        <option value="Doll">Doll</option>
-        <option value="Other">Other</option>
-    </select><br>
+                            <li class="mb-3">
+                                <label class="form-label text-black" for="killer">
+                                    <strong>Who or what is the killer?</strong>
+                                </label>
+                                <select name="killer" class="form-control text-black" id="killer" required="required">
+                                    <option value="Alien">Alien</option>
+                                    <option value="Ghost">Ghost</option>
+                                    <option value="Monster">Monster</option>
+                                    <option value="Demon">Demon</option>
+                                    <option value="Human">Human</option>
+                                    <option value="Undead">Undead</option>
+                                    <option value="Doll">Doll</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </li>
+                        </ul>
 
-    <button type="submit">Submit Quiz</button>
-</form>
+                        <div class="d-flex justify-content-center pt-3">
+                            <button type="reset" data-mdb-button-init="" class="btn btn-outline-black btn-lg" style="">Reset all</button>
+                            <button type="submit" data-mdb-button-init="" class="btn btn-black btn-lg ms-2">Submit Quiz</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- MDB JS -->
+    <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
+    ></script>
+
+    <footer class="bg-body-tertiary bg-danger text-center text-lg-start">
+        <!-- Copyright -->
+        <div class="text-center text-black p-3" style="background-color: rgba(10, 0, 0, 0.05);">
+            © 2024 Copyright: FearSeer
+        </div>
+        <!-- Copyright -->
+    </footer>
 </body>
 </html>

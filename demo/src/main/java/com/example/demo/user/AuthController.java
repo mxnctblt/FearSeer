@@ -28,7 +28,7 @@ public class AuthController {
             return "redirect:/"; // Redirect to homepage or dashboard
         }
         if (error != null) {
-            model.addAttribute("error", "Invalid username or password.");
+            model.addAttribute("error", "Invalid email or password.");
         }
         return "login";
     }
