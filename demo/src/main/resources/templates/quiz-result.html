@@ -25,11 +25,6 @@
         #scoreSection, #answersSection {
             display: none;
         }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
     </style>
     <script>
         function toggleScore() {
@@ -44,96 +39,159 @@
     </script>
 </head>
 <body>
-<h1 th:text="'Your Quiz Result for ' + ${quiz.movieTitle}">Your Quiz Result</h1>
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg" style="background-color: #262626">
+            <div class="container-fluid">
+                <!-- Left element -->
+                <div class="d-flex align-items-center">
+                    <a class="navbar-brand me-5" href="/">
+                        <img th:src="@{/media/logoFearSeer.png}" class="rounded me-3" height="35" alt="FearSeer Logo" loading="lazy" />
+                        <strong class="text-danger">FearSeer</strong>
+                    </a>
+                </div>
+                <!-- Right element -->
+                <div class="d-flex align-items-center">
+                    <a class="navbar-brand me-3 text-danger" href="/">
+                        Home
+                    </a>
+                    <a class="navbar-brand me-4 text-danger" href="/">
+                        About
+                    </a>
+                    <a class="navbar-brand me-4 text-danger" href="/horror-movies-with-quiz">
+                        Movies with Quiz
+                    </a>
+                    <!-- Logout Button -->
+                    <form th:action="@{/auth/logout}" method="post">
+                        <button type="submit" class="btn btn-outline-danger ms-2">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <!-- Background image -->
+        <div
+                class="p-5 text-center bg-image"
+                style="
+          background-image: url('/media/homepageBanner.jpg');
+          height: 400px;
+        "
+        >
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div>
+                        <h1 class="mb-3" style="color: #ffffff">FearSeer</h1>
+                        <h4 class="mb-3 text-danger">Are you ready for another one? Or are you too scared...</h4>
+                        <a data-mdb-ripple-init class="btn btn-danger btn-lg" href="/horror-movies-with-quiz" role="button"
+                        >SEE MORE MOVIES</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="vh-aut min-vh-100" style="background-color: #262626;">
+        <div class="container-fluid">
+            <div class="p-5 text-white">
+                <h1 th:text="'Your Quiz Result for:' + ${quiz.movieTitle}"
+                    class="pb-5 d-flex justify-content-center align-items-center">Your Quiz Result:</h1>
+                <h5 class="d-flex justify-content-center align-items-center">Have you watched the movie yet? No cheating, you don't want to be spoiled!</h5>
+            </div>
+            <div class="p-5 d-flex justify-content-center align-items-center">
+                <div class="card col-4 pb-4 pt-2 d-flex justify-content-center align-items-center bg-danger">
+                    <button onclick="toggleScore()" class="btn btn-black btn-lg m-4">See Your Score</button>
+                    <div id="scoreSection">
+                        <strong th:text="'You scored ' + ${quiz.score} + ' out of 10 (' + (${quiz.score} * 10) + '%)'" class="text-black">You scored: X out of 10 (Y%)</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="p-5 d-flex justify-content-center align-items-center">
+                <div class="card col-8 pb-4 pt-2 d-flex justify-content-center align-items-center bg-danger">
+                    <button onclick="toggleAnswers()" class="btn btn-black btn-lg m-4">See Correct Answers</button>
+                    <div class="text-black p-5" id="answersSection">
+                        <h2 class="pb-3">Here are the correct answers:</h2>
+                        <ul>
+                            <li class="pb-2">
+                                <strong>1- How many people will die?</strong> Your answer:
+                                <strong th:text="${quiz.deathCountPrediction}">0</strong> |
+                                Correct answer:
+                                <strong th:text="${correctAnswers.deathCount}">0</strong>
+                            </li>
+                            <li class="pb-2">
+                                <strong>2- How many people will survive?</strong> Your answer:
+                                <strong th:text="${quiz.lifeCountPrediction}">0</strong> |
+                                Correct answer:
+                                <strong th:text="${correctAnswers.lifeCount}">0</strong>
+                            </li>
+                            <li class="pb-2">
+                                <strong>3- Will the main character survive?</strong> Your answer:
+                                <strong th:text="${quiz.mainCharacterPrediction}">No</strong> |
+                                Correct answer:
+                                <strong th:text="${correctAnswers.mainCharacter}">No</strong>
+                            </li>
+                            <li class="pb-2">
+                                <strong>4- How many jump scares is there going to be?</strong> Your answer:
+                                <strong th:text="${quiz.jumpScarePrediction}">0</strong> |
+                                Correct answer:
+                                <strong th:text="${correctAnswers.jumpScares}">0</strong>
+                            </li>
+                            <li class="pb-2">
+                                <strong>5- Will there be a bit of Romance too?</strong> Your answer:
+                                <strong th:text="${quiz.romancePrediction}">No</strong> |
+                                Correct answer:
+                                <strong th:text="${correctAnswers.romance}">No</strong>
+                            </li>
+                            <li class="pb-2">
+                                <strong>6- Will there be a lot of blood?</strong> Your answer:
+                                <strong th:text="${quiz.bloodPrediction}">No</strong> |
+                                Correct answer:
+                                <strong th:text="${correctAnswers.blood}">No</strong>
+                            </li>
+                            <li class="pb-2">
+                                <strong>7- Is there going to be the classic final girl?</strong> Your answer:
+                                <strong th:text="${quiz.finalGirlPrediction}">No</strong> |
+                                Correct answer:
+                                <strong th:text="${correctAnswers.finalGirl}">No</strong>
+                            </li>
+                            <li class="pb-2">
+                                <strong>8- Will there be a lot of creaking, squeaking, and grinding?</strong> Your answer:
+                                <strong th:text="${quiz.creakingPrediction}">No</strong> |
+                                Correct answer:
+                                <strong th:text="${correctAnswers.creaking}">No</strong>
+                            </li>
+                            <li class="pb-2">
+                                <strong>9- What is the weapon of choice?</strong> Your answer:
+                                <strong th:text="${quiz.weaponPrediction}">N/A</strong> |
+                                Correct answer:
+                                <strong th:text="${correctAnswers.weapon}">N/A</strong>
+                            </li>
+                            <li class="pb-2">
+                                <strong>10- Who or what is the killer?</strong> Your answer:
+                                <strong th:text="${quiz.killerPrediction}">N/A</strong> |
+                                Correct answer:
+                                <strong th:text="${correctAnswers.killer}">N/A</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="p-5 d-flex justify-content-center align-items-center">
+                <a data-mdb-ripple-init class="btn btn-danger btn-lg" href="/" role="button"
+                >Go Back to Home</a>
+            </div>
+        </div>
+    </section>
+    <!-- MDB JS -->
+    <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
+    ></script>
 
-<p>Have you watched the movie yet? Are you ready to see your score? Check the correct answers below!</p>
-
-<button onclick="toggleScore()">See Your Score</button>
-<button onclick="toggleAnswers()">See Correct Answers</button>
-
-<div id="scoreSection">
-    <p th:text="'You scored ' + ${quiz.score} + ' out of 10 (' + (${quiz.score} * 10) + '%)'">You scored: X out of 10 (Y%)</p>
-</div>
-
-<div id="answersSection">
-    <h2>Here are the correct answers:</h2>
-    <ul>
-        <li>
-            <strong>Death Count:</strong> Your answer:
-            <span th:text="${quiz.deathCountPrediction}">0</span> |
-            Correct answer:
-            <span th:text="${correctAnswers.deathCount}">0</span>
-        </li>
-        <li>
-            <strong>Survivors:</strong> Your answer:
-            <span th:text="${quiz.lifeCountPrediction}">0</span> |
-            Correct answer:
-            <span th:text="${correctAnswers.lifeCount}">0</span>
-        </li>
-        <li>
-            <strong>Main Character Survives:</strong> Your answer:
-            <span th:text="${quiz.mainCharacterPrediction}">No</span> |
-            Correct answer:
-            <span th:text="${correctAnswers.mainCharacter}">No</span>
-        </li>
-        <li>
-            <strong>Jump Scares:</strong> Your answer:
-            <span th:text="${quiz.jumpScarePrediction}">0</span> |
-            Correct answer:
-            <span th:text="${correctAnswers.jumpScares}">0</span>
-        </li>
-        <li>
-            <strong>Romance:</strong> Your answer:
-            <span th:text="${quiz.romancePrediction}">No</span> |
-            Correct answer:
-            <span th:text="${correctAnswers.romance}">No</span>
-        </li>
-        <li>
-            <strong>Blood:</strong> Your answer:
-            <span th:text="${quiz.bloodPrediction}">No</span> |
-            Correct answer:
-            <span th:text="${correctAnswers.blood}">No</span>
-        </li>
-        <li>
-            <strong>Final Girl:</strong> Your answer:
-            <span th:text="${quiz.finalGirlPrediction}">No</span> |
-            Correct answer:
-            <span th:text="${correctAnswers.finalGirl}">No</span>
-        </li>
-        <li>
-            <strong>Creaking:</strong> Your answer:
-            <span th:text="${quiz.creakingPrediction}">No</span> |
-            Correct answer:
-            <span th:text="${correctAnswers.creaking}">No</span>
-        </li>
-        <li>
-            <strong>Weapon:</strong> Your answer:
-            <span th:text="${quiz.weaponPrediction}">N/A</span> |
-            Correct answer:
-            <span th:text="${correctAnswers.weapon}">N/A</span>
-        </li>
-        <li>
-            <strong>Killer:</strong> Your answer:
-            <span th:text="${quiz.killerPrediction}">N/A</span> |
-            Correct answer:
-            <span th:text="${correctAnswers.killer}">N/A</span>
-        </li>
-    </ul>
-</div>
-
-<a href="/">Go back to home</a>
-<!-- MDB JS -->
-<script
-        type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
-></script>
-
-<footer class="bg-body-tertiary bg-danger text-center text-lg-start">
-    <!-- Copyright -->
-    <div class="text-center text-black p-3" style="background-color: rgba(10, 0, 0, 0.05);">
-        © 2024 Copyright: FearSeer
-    </div>
-    <!-- Copyright -->
-</footer>
+    <footer class="bg-body-tertiary bg-danger text-center text-lg-start">
+        <!-- Copyright -->
+        <div class="text-center text-black p-3" style="background-color: rgba(10, 0, 0, 0.05);">
+            © 2024 Copyright: FearSeer
+        </div>
+        <!-- Copyright -->
+    </footer>
 </body>
 </html>
