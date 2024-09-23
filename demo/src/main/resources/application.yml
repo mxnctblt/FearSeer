@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/fearseer
     username: root
-    password: 
+    password: Yoshi.701!!!
   jpa:
     hibernate:
       ddl-auto: update

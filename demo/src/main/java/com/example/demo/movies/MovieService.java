@@ -99,7 +99,7 @@ public class MovieService {
         if (!results.isEmpty()) {
             Map<String, Object> firstMovie = results.get(0);
             String posterPath = (String) firstMovie.get("poster_path");
-            return "https://image.tmdb.org/t/p/w500" + posterPath; // Construct the full URL
+            return "https://image.tmdb.org/t/p/w500" + posterPath;
         }
         return null; // Return null if no movies found
     }

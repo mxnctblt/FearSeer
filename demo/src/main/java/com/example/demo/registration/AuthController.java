@@ -1,10 +1,12 @@
-package com.example.demo.user;
+package com.example.demo.registration;
 
 import com.example.demo.movies.MovieService;
+import com.example.demo.user.User;
+import com.example.demo.user.UserRole;
+import com.example.demo.user.UserService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import com.example.demo.registration.RegistrationRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
