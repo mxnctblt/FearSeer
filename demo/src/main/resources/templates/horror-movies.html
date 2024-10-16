@@ -44,6 +44,12 @@
                     <a class="navbar-brand me-4 text-danger" href="/horror-movies-with-quiz">
                         Movies with Quiz
                     </a>
+                    <!-- Profile Link -->
+                    <div>
+                        <a class="navbar-brand me-4 text-danger" th:href="@{/profile/{userUsername}(userUsername=${user.userUsername})}">
+                            Profile
+                        </a>
+                    </div>
                     <!-- Logout Button -->
                     <form th:action="@{/auth/logout}" method="post">
                         <button type="submit" class="btn btn-outline-danger ms-2">Logout</button>

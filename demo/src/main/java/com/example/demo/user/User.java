@@ -8,7 +8,10 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.core.io.ClassPathResource;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -33,15 +36,18 @@ public class User implements UserDetails {
 
     private String firstName;
     private String lastName;
-
-    // Added username field
     private String username;
-
     private String email;
     private String password;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private byte[] profilePicture;
+
+    private String bio;
 
     public User(String firstName,
                 String lastName,
@@ -55,10 +61,26 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
         this.userRole = userRole;
+        this.profilePicture = defaultProfilePicture();
+        this.bio = "";
     }
 
-    // For Spring Security's UserDetails interface
+    private byte[] defaultProfilePicture() {
+        try {
+            // Load default profile picture from resources
+            ClassPathResource resource = new ClassPathResource("static/media/default-profile.jpg");
+            // Get the file size to check if it's too large
+            long fileSize = resource.getFile().length(); // Get the size of the file
+            if (fileSize > 16 * 1024 * 1024) { // Assuming we want to cap at 16MB
+                throw new IllegalStateException("Default profile picture is too large.");
+            }
+            return Files.readAllBytes(resource.getFile().toPath());
+        } catch (IOException e) {
+            throw new IllegalStateException("Default profile picture could not be loaded", e);
+        }
+    }
 
+    // Other methods for Spring Security
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
@@ -70,7 +92,6 @@ public class User implements UserDetails {
         return password;
     }
 
-    // Keep email as username for Spring Security login
     @Override
     public String getUsername() {
         return email;
@@ -87,6 +108,16 @@ public class User implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
         return true;
     }
 }
