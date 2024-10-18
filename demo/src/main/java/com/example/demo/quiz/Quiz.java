@@ -18,16 +18,8 @@ import lombok.Setter;
 @Table(name = "quiz")
 public class Quiz {
 
-    @SequenceGenerator(
-            name = "quiz_sequence",
-            sequenceName = "quiz_sequence",
-            allocationSize = 1
-    )
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "quiz_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
