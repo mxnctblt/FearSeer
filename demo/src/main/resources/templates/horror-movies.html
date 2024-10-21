@@ -107,6 +107,13 @@
                                 <img th:src="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}" alt="Movie Poster"
                                 class="rounded" height="370" width="270">
                             </div>
+                            <!-- Like Button -->
+                            <form th:action="@{/liked-movies/like}" method="post" class="text-center">
+                                <input type="hidden" name="movieTitle" th:value="${movie['title']}"/>
+                                <input type="hidden" name="moviePosterPath" th:value="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}"/>
+                                <input type="hidden" name="movieID" th:value="${movie['id']}"/>
+                                <button type="submit" class="btn btn-danger mt-2">Like</button>
+                            </form>
 
                             <!-- Conditionally show the button or message based on quiz availability -->
                             <div th:if="${quizMovieTitles.contains(movie['title'])}">

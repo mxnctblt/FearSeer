@@ -1,5 +1,7 @@
 package com.example.demo.user;
 
+import com.example.demo.movies.LikedMovie;
+import com.example.demo.movies.LikedMovieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -14,14 +16,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Base64;
+import java.util.List;
 
 @Controller
 public class UserController {
 
+    private final LikedMovieService likedMovieService;
     private final UserService userService;
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    public UserController(UserService userService) {
+    public UserController(LikedMovieService likedMovieService, UserService userService) {
+        this.likedMovieService = likedMovieService;
         this.userService = userService;
     }
 
@@ -31,6 +36,10 @@ public class UserController {
         User user = (User) auth.getPrincipal();
 
         model.addAttribute("user", user);
+
+        // Fetch liked movies
+        List<LikedMovie> likedMovies = likedMovieService.getLikedMovies(user);
+        model.addAttribute("likedMovies", likedMovies);
 
         // Convert profile picture to Base64 for display in the HTML
         if (user.getProfilePicture() != null) {
