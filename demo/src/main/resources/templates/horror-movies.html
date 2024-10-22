@@ -96,6 +96,10 @@
                         </div>
                     </form>
                 </div>
+                <!-- Debugging: Show liked movie IDs -->
+                <div>
+                    <p>Liked Movie IDs: <span th:text="${likedMoviesByUser}"></span></p>
+                </div>
                 <!-- Popular Movies -->
                 <h1 class="m-2 text-white">Popular Movies :</h1>
                 <ul style="list-style-type: none;" class="d-flex justify-content-center row">
@@ -107,13 +111,20 @@
                                 <img th:src="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}" alt="Movie Poster"
                                 class="rounded" height="370" width="270">
                             </div>
-                            <!-- Like Button -->
-                            <form th:action="@{/liked-movies/like}" method="post" class="text-center">
-                                <input type="hidden" name="movieTitle" th:value="${movie['title']}"/>
-                                <input type="hidden" name="moviePosterPath" th:value="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}"/>
-                                <input type="hidden" name="movieID" th:value="${movie['id']}"/>
-                                <button type="submit" class="btn btn-danger mt-2">Like</button>
-                            </form>
+                            <!-- Conditional Like/Unlike Button -->
+                            <div class="text-center">
+                                <form th:action="@{/liked-movies/like}" method="post" th:if="${!likedMoviesByUser.contains(movie['id'])}">
+                                    <input type="hidden" name="movieTitle" th:value="${movie['title']}"/>
+                                    <input type="hidden" name="moviePosterPath" th:value="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}"/>
+                                    <input type="hidden" name="movieID" th:value="${movie['id']}"/>
+                                    <button type="submit" class="btn btn-danger mt-2">Like</button>
+                                </form>
+
+                                <form th:action="@{/liked-movies/unlike}" method="post" th:if="${likedMoviesByUser.contains(movie['id'])}">
+                                    <input type="hidden" name="movieID" th:value="${movie['id']}"/>
+                                    <button type="submit" class="btn btn-outline-danger mt-2">Unlike</button>
+                                </form>
+                            </div>
 
                             <!-- Conditionally show the button or message based on quiz availability -->
                             <div th:if="${quizMovieTitles.contains(movie['title'])}">

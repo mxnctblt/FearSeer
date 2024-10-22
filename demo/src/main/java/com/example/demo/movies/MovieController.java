@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class MovieController {
     private final MovieService movieService;
+    private final LikedMovieService likedMovieService;
 
-    public MovieController(MovieService movieService) {
+    public MovieController(MovieService movieService, LikedMovieService likedMovieService) {
         this.movieService = movieService;
+        this.likedMovieService = likedMovieService;
     }
 
     // Display list of horror movies at root URL
@@ -32,7 +35,16 @@ public class MovieController {
         if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User) {
             User user = (User) auth.getPrincipal();
             model.addAttribute("user", user);
+
+            // Fetch liked movie IDs for the current user
+            List<LikedMovie> likedMovies = likedMovieService.getLikedMovies(user);
+            List<Integer> likedMovieIds = likedMovies.stream()
+                    .map(likedMovie -> likedMovie.getMovieID().intValue())
+                    .collect(Collectors.toList());
+            model.addAttribute("likedMoviesByUser", likedMovieIds);
+
         }
+
         return "horror-movies";
     }
 
@@ -49,6 +61,13 @@ public class MovieController {
         if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User) {
             User user = (User) auth.getPrincipal();
             model.addAttribute("user", user);
+
+            // Fetch liked movie IDs for the current user (reused logic for search)
+            List<LikedMovie> likedMovies = likedMovieService.getLikedMovies(user);
+            List<Integer> likedMovieIds = likedMovies.stream()
+                    .map(likedMovie -> likedMovie.getMovieID().intValue())
+                    .collect(Collectors.toList());
+            model.addAttribute("likedMoviesByUser", likedMovieIds);
         }
         return "horror-movies";
     }

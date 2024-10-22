@@ -21,6 +21,13 @@ public class LikedMovieService {
         likedMovieRepository.save(likedMovie);
     }
 
+    public void unlikeMovie(User user, Long movieID) {
+        LikedMovie likedMovie = likedMovieRepository.findByUserAndMovieID(user, movieID);
+        if (likedMovie != null) {
+            likedMovieRepository.delete(likedMovie);
+        }
+    }
+
     public List<LikedMovie> getLikedMovies(User user) {
         return likedMovieRepository.findByUser(user);
     }

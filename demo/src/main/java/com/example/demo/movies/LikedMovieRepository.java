@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface LikedMovieRepository extends JpaRepository<LikedMovie, Long> {
     List<LikedMovie> findByUser(User user);
+    LikedMovie findByUserAndMovieID(User user, Long movieID);
 }
