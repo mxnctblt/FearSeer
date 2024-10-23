@@ -1,4 +1,4 @@
-package com.example.demo.movies;
+package com.example.demo.likedMovies;
 
 import com.example.demo.user.User;
 import com.example.demo.user.UserService;
@@ -35,12 +35,8 @@ public class LikedMovieController {
         likedMovieService.likeMovie(user, movieTitle, moviePosterPath, movieID);
 
         // Redirect back to the previous page
-        String referer = request.getHeader("Referer");
-        // Extract the path (removing localhost:8080 or domain part)
-        if (referer != null) {
-            // Remove the "http://localhost:8080" part, assuming this format
-            referer = referer.replaceAll("^(http[s]?://[^/]+)", "");
-        }
+        String referer = request.getHeader("Referer").replaceAll("^(http[s]?://[^/]+)", "");
+
         return "redirect:" + referer;
     }
 
@@ -52,12 +48,8 @@ public class LikedMovieController {
         likedMovieService.unlikeMovie(user, movieID);
 
         // Redirect back to the previous page
-        String referer = request.getHeader("Referer");
-        // Extract the path (removing localhost:8080 or domain part)
-        if (referer != null) {
-            // Remove the "http://localhost:8080" part, assuming this format
-            referer = referer.replaceAll("^(http[s]?://[^/]+)", "");
-        }
+        String referer = request.getHeader("Referer").replaceAll("^(http[s]?://[^/]+)", "");
+
         return "redirect:" + referer;
     }
 

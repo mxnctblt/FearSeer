@@ -1,4 +1,4 @@
-package com.example.demo.movies;
+package com.example.demo.likedMovies;
 
 import com.example.demo.user.User;
 import org.springframework.beans.factory.annotation.Autowired;

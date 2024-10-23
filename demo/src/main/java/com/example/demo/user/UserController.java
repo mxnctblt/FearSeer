@@ -1,7 +1,11 @@
 package com.example.demo.user;
 
-import com.example.demo.movies.LikedMovie;
-import com.example.demo.movies.LikedMovieService;
+import com.example.demo.likedMovies.LikedMovie;
+import com.example.demo.likedMovies.LikedMovieService;
+import com.example.demo.seenMovies.SeenMovie;
+import com.example.demo.seenMovies.SeenMovieService;
+import com.example.demo.watchLaterMovies.WatchLaterMovie;
+import com.example.demo.watchLaterMovies.WatchLaterMovieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -22,11 +26,18 @@ import java.util.List;
 public class UserController {
 
     private final LikedMovieService likedMovieService;
+    private final WatchLaterMovieService watchLaterMovieService;
+    private final SeenMovieService seenMovieService;
     private final UserService userService;
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    public UserController(LikedMovieService likedMovieService, UserService userService) {
+    public UserController(LikedMovieService likedMovieService,
+                          WatchLaterMovieService watchLaterMovieService,
+                          SeenMovieService seenMovieService,
+                          UserService userService) {
         this.likedMovieService = likedMovieService;
+        this.watchLaterMovieService = watchLaterMovieService;
+        this.seenMovieService = seenMovieService;
         this.userService = userService;
     }
 
@@ -40,6 +51,14 @@ public class UserController {
         // Fetch liked movies
         List<LikedMovie> likedMovies = likedMovieService.getLikedMovies(user);
         model.addAttribute("likedMovies", likedMovies);
+
+        // Fetch Watch Later movies
+        List<WatchLaterMovie> watchLaterMovies = watchLaterMovieService.getWatchLaterMovies(user);
+        model.addAttribute("watchLaterMovies", watchLaterMovies);
+
+        // Fetch Seen movies
+        List<SeenMovie> seenMovies = seenMovieService.getSeenMovies(user);
+        model.addAttribute("seenMovies", seenMovies);
 
         // Convert profile picture to Base64 for display in the HTML
         if (user.getProfilePicture() != null) {

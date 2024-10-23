@@ -96,10 +96,6 @@
                         </div>
                     </form>
                 </div>
-                <!-- Debugging: Show liked movie IDs -->
-                <div>
-                    <p>Liked Movie IDs: <span th:text="${likedMoviesByUser}"></span></p>
-                </div>
                 <!-- Popular Movies -->
                 <h1 class="m-2 text-white">Popular Movies :</h1>
                 <ul style="list-style-type: none;" class="d-flex justify-content-center row">
@@ -111,8 +107,8 @@
                                 <img th:src="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}" alt="Movie Poster"
                                 class="rounded" height="370" width="270">
                             </div>
-                            <!-- Conditional Like/Unlike Button -->
                             <div class="text-center">
+                                <!-- Like/Unlike Button -->
                                 <form th:action="@{/liked-movies/like}" method="post" th:if="${!likedMoviesByUser.contains(movie['id'])}">
                                     <input type="hidden" name="movieTitle" th:value="${movie['title']}"/>
                                     <input type="hidden" name="moviePosterPath" th:value="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}"/>
@@ -123,6 +119,32 @@
                                 <form th:action="@{/liked-movies/unlike}" method="post" th:if="${likedMoviesByUser.contains(movie['id'])}">
                                     <input type="hidden" name="movieID" th:value="${movie['id']}"/>
                                     <button type="submit" class="btn btn-outline-danger mt-2">Unlike</button>
+                                </form>
+
+                                <!-- Watch Later Button -->
+                                <form th:action="@{/watch-later-movies/add}" method="post" th:if="${!watchLaterMoviesByUser.contains(movie['id'])}">
+                                    <input type="hidden" name="movieTitle" th:value="${movie['title']}"/>
+                                    <input type="hidden" name="moviePosterPath" th:value="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}"/>
+                                    <input type="hidden" name="movieID" th:value="${movie['id']}"/>
+                                    <button type="submit" class="btn btn-warning mt-2">Watch Later</button>
+                                </form>
+
+                                <form th:action="@{/watch-later-movies/remove}" method="post" th:if="${watchLaterMoviesByUser.contains(movie['id'])}">
+                                    <input type="hidden" name="movieID" th:value="${movie['id']}"/>
+                                    <button type="submit" class="btn btn-outline-warning mt-2">Remove Watch Later</button>
+                                </form>
+
+                                <!-- Seen Button -->
+                                <form th:action="@{/seen-movies/add}" method="post" th:if="${!seenMoviesByUser.contains(movie['id'])}">
+                                    <input type="hidden" name="movieTitle" th:value="${movie['title']}"/>
+                                    <input type="hidden" name="moviePosterPath" th:value="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}"/>
+                                    <input type="hidden" name="movieID" th:value="${movie['id']}"/>
+                                    <button type="submit" class="btn btn-success mt-2">Seen</button>
+                                </form>
+
+                                <form th:action="@{/seen-movies/remove}" method="post" th:if="${seenMoviesByUser.contains(movie['id'])}">
+                                    <input type="hidden" name="movieID" th:value="${movie['id']}"/>
+                                    <button type="submit" class="btn btn-outline-success mt-2">Remove Seen</button>
                                 </form>
                             </div>
 

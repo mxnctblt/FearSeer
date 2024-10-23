@@ -1,4 +1,4 @@
-package com.example.demo.movies;
+package com.example.demo.likedMovies;
 
 import com.example.demo.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;

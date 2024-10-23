@@ -33,13 +33,33 @@
 
     <p th:if="${success}" th:text="${success}"></p>
     <p th:if="${error}" th:text="${error}"></p>
-    <h2 class="mt-4 text-white">Liked Movies:</h2>
 
+    <h2 class="mt-4 text-white">Liked Movies:</h2>
     <ul class="list-unstyled">
         <li th:each="likedMovie : ${likedMovies}" class="d-flex justify-content-between bg-dark p-3 m-2 rounded">
             <div>
                 <h5 th:text="${likedMovie.movieTitle}" class="text-white"></h5>
                 <img th:src="${likedMovie.moviePosterPath}" alt="Movie Poster" class="rounded" height="150">
+            </div>
+        </li>
+    </ul>
+
+    <h2 class="mt-4 text-white">Watch Later Movies:</h2>
+    <ul class="list-unstyled">
+        <li th:each="watchLaterMovie : ${watchLaterMovies}" class="d-flex justify-content-between bg-dark p-3 m-2 rounded">
+            <div>
+                <h5 th:text="${watchLaterMovie.movieTitle}" class="text-white"></h5>
+                <img th:src="${watchLaterMovie.moviePosterPath}" alt="Movie Poster" class="rounded" height="150">
+            </div>
+        </li>
+    </ul>
+
+    <h2 class="mt-4 text-white">Seen Movies:</h2>
+    <ul class="list-unstyled">
+        <li th:each="seenMovie : ${seenMovies}" class="d-flex justify-content-between bg-dark p-3 m-2 rounded">
+            <div>
+                <h5 th:text="${seenMovie.movieTitle}" class="text-white"></h5>
+                <img th:src="${seenMovie.moviePosterPath}" alt="Movie Poster" class="rounded" height="150">
             </div>
         </li>
     </ul>
