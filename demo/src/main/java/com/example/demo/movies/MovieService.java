@@ -54,6 +54,12 @@ public class MovieService {
                 .collect(Collectors.toList());
     }
 
+    public List<Integer> getQuizMovieIds() {
+        return quizMovies.stream()
+                .map(movie -> (Integer) movie.get("tmdbId"))
+                .collect(Collectors.toList());
+    }
+
     // Get a list of Popular Horror Movies of the moment (Default)
     public Map<String, Object> getHorrorMovies() {
         String url = UriComponentsBuilder.fromHttpUrl(tmdbApiUrl)

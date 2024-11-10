@@ -31,4 +31,10 @@ public class SeenMovieService {
     public List<SeenMovie> getSeenMovies(User user) {
         return seenMovieRepository.findByUser(user);
     }
+
+    public void deleteSeenMoviesByUser(User user) {
+        List<SeenMovie> seenMovies = seenMovieRepository.findByUser(user);
+        seenMovieRepository.deleteAll(seenMovies);
+    }
+
 }

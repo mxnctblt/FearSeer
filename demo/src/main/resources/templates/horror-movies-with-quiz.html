@@ -2,69 +2,72 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FearSeer - A site for horror movie lovers to discover movies, take quizzes, and track favorites.">
     <title>FearSeer - Horror Movies with Quiz</title>
     <!-- Font Awesome -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-            rel="stylesheet"
-    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
-    <link
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <!-- MDB -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css"
-            rel="stylesheet"
-    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="/styles.css" rel="stylesheet" />
     <!-- FAVICON -->
     <link rel="icon" type="media/x-icon" href="/media/favicon.ico" />
 </head>
 <body>
-    <header>
+    <header role="banner">
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg" style="background-color: #262626">
+        <nav class="navbar navbar-expand-lg navbar-custom fixed-top" aria-label="Main Navigation">
             <div class="container-fluid">
                 <!-- Left element -->
-                <div class="d-flex align-items-center">
-                    <a class="navbar-brand me-5" href="/">
-                        <img th:src="@{/media/logoFearSeer.png}" class="rounded me-3" height="35" alt="FearSeer Logo" loading="lazy" />
-                        <strong class="text-danger">FearSeer</strong>
-                    </a>
-                </div>
+                <a class="navbar-brand me-5" aria-current="page" href="/">
+                    <img th:src="@{/media/logoFearSeer.png}" class="rounded me-3" height="35" alt="FearSeer Logo" loading="lazy" />
+                    <strong class="text-danger">FearSeer</strong>
+                </a>
+                <!-- Navbar toggle button for mobile screens -->
+                <button
+                        class="navbar-toggler text-danger"
+                        type="button"
+                        data-mdb-toggle="collapse"
+                        data-mdb-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                >
+                    <i class="fas fa-bars"></i>
+                </button>
                 <!-- Right element -->
-                <div class="d-flex align-items-center">
-                    <a class="navbar-brand me-3 text-danger" href="/">
-                        Home
-                    </a>
-                    <a class="navbar-brand me-4 text-danger" href="/">
-                        About
-                    </a>
-                    <a class="navbar-brand me-4 text-danger"  aria-current="page" href="/horror-movies-with-quiz">
-                        Movies with Quiz
-                    </a>
-                    <!-- Logout Button -->
-                    <form th:action="@{/auth/logout}" method="post">
-                        <button type="submit" class="btn btn-outline-danger ms-2">Logout</button>
-                    </form>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="d-flex align-items-center ms-auto navbar-nav">
+                        <a class="navbar-brand me-3 text-danger nav-link" href="/">
+                            Home
+                        </a>
+                        <a class="navbar-brand me-4 text-danger nav-link active" aria-current="page" href="/horror-movies-with-quiz">
+                            Take a Quiz
+                        </a>
+                        <!-- Profile Link -->
+                        <a class="navbar-brand me-4 text-danger nav-link" th:href="@{/profile/{userUsername}(userUsername=${user.userUsername})}">
+                            <span th:text="${user.userUsername}" class="pe-3">Username</span>
+                            <img th:src="'data:image/jpeg;base64,' + ${profilePictureBase64}" class="rounded-circle shadow-4-strong" height="35" alt="profile picture" loading="lazy">
+                        </a>
+                        <!-- Logout Button -->
+                        <form th:action="@{/auth/logout}" method="post" class="nav-link">
+                            <button type="submit" class="btn btn-outline-danger ms-2" aria-label="Log out button">Logout</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </nav>
         <!-- Background image -->
-        <div
-                class="p-5 text-center bg-image"
-                style="
-              background-image: url('/media/homepageBanner.jpg');
-              height: 400px;
-            "
-        >
-            <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+        <div class="p-5 text-center bg-image bg-image-custom">
+            <div class="mask mask-custom">
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <div>
-                        <h1 class="mb-3" style="color: #ffffff">FearSeer</h1>
+                        <h1 class="mb-3 text-light" >Take a quiz !</h1>
                         <a data-mdb-ripple-init class="btn btn-danger btn-lg" href="/" role="button"
-                        >GO TO HOME</a
+                        >GO BACK TO HOME</a
                         >
                     </div>
                 </div>
@@ -72,9 +75,9 @@
         </div>
     </header>
     <!-- Content-->
-    <section class="vh-auto min-vh-100" style="background-color: #262626;">
+    <section class="vh-auto content-section" role="main">
         <div class="container-fluid">
-            <div class="p-5 row d-flex justify-content-center align-items-center vh-auto">
+            <div class="p-md-5 row d-flex justify-content-center align-items-center vh-auto">
                 <!-- Search form -->
                 <div class="d-flex justify-content-center">
                     <form action="/search" method="GET">
@@ -83,7 +86,7 @@
                                 <input type="text" name="query" id="form1" class="form-control text-white" />
                                 <label class="form-label text-white" for="form1">Search a movie...</label>
                             </div>
-                            <button type="submit" class="btn btn-danger" data-mdb-ripple-init>
+                            <button type="submit" class="btn btn-danger" data-mdb-ripple-init aria-label="search button">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
@@ -95,10 +98,10 @@
                     <ul>
                         <li th:each="movie : ${movies}" class="m-3">
                             <div class="row justify-content-between">
-                                <div class="col-8">
-                                    <h2 th:text="${movie['movieTitle']}" class="d-inline rounded m-3 pe-5 ps-5 text-black text-bg-danger"></h2>
+                                <div class="col-12 col-md-8">
+                                    <h2 th:text="${movie['movieTitle']}" class="d-md-inline rounded m-3 pe-2 ps-2 pe-md-5 ps-md-5 text-black text-bg-danger"></h2>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-12 col-md-4">
                                     <a th:href="@{/quiz/{movieTitle}(movieTitle=${movie['movieTitle']})}" class="d-inline btn btn-lg btn-outline-danger">Take Quiz</a>
                                 </div>
                             </div>
@@ -115,9 +118,9 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
     ></script>
 
-    <footer class="bg-body-tertiary bg-danger text-center text-lg-start">
+    <footer class="footer-custom">
         <!-- Copyright -->
-        <div class="text-center text-black p-3" style="background-color: rgba(10, 0, 0, 0.05);">
+        <div class="text-center text-black p-3">
             © 2024 Copyright: FearSeer
         </div>
         <!-- Copyright -->

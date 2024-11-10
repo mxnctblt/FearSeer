@@ -2,6 +2,8 @@ package com.example.demo.quiz;
 
 import com.example.demo.user.User;
 import com.example.demo.user.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,6 +36,18 @@ public class QuizController {
     @GetMapping("/{movieTitle}")
     public String showQuiz(@PathVariable String movieTitle, Model model) {
         model.addAttribute("movieTitle", movieTitle);
+        // Get authenticated user details
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User) {
+            User user = (User) auth.getPrincipal();
+            model.addAttribute("user", user);
+
+            // Convert profile picture to Base64 for display in the HTML
+            if (user.getProfilePicture() != null) {
+                String profilePictureBase64 = Base64.getEncoder().encodeToString(user.getProfilePicture());
+                model.addAttribute("profilePictureBase64", profilePictureBase64);
+            }
+        }
         return "quiz-form";
     }
 
@@ -110,6 +125,13 @@ public class QuizController {
 
         model.addAttribute("quiz", quiz);
         model.addAttribute("correctAnswers", correctAnswers);
+
+        // Include user details for navbar
+        model.addAttribute("user", user);
+        if (user.getProfilePicture() != null) {
+            String profilePictureBase64 = Base64.getEncoder().encodeToString(user.getProfilePicture());
+            model.addAttribute("profilePictureBase64", profilePictureBase64);
+        }
 
         return "quiz-result";
     }

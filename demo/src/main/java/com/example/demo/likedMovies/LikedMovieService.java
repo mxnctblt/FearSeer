@@ -31,4 +31,9 @@ public class LikedMovieService {
     public List<LikedMovie> getLikedMovies(User user) {
         return likedMovieRepository.findByUser(user);
     }
+
+    public void deleteLikedMoviesByUser(User user) {
+        List<LikedMovie> likedMovies = likedMovieRepository.findByUser(user);
+        likedMovieRepository.deleteAll(likedMovies);
+    }
 }

@@ -2,84 +2,70 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FearSeer - A site for horror movie lovers to discover movies, take quizzes, and track favorites.">
     <title>FearSeer - Quiz Result for [[${quiz.movieTitle}]]</title>
     <!-- Font Awesome -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-            rel="stylesheet"
-    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
-    <link
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <!-- MDB -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css"
-            rel="stylesheet"
-    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="/styles.css" rel="stylesheet" />
     <!-- FAVICON -->
     <link rel="icon" type="media/x-icon" href="/media/favicon.ico" />
-    <style>
-        /* Hide elements by default */
-        #scoreSection, #answersSection {
-            display: none;
-        }
-    </style>
-    <script>
-        function toggleScore() {
-            const scoreSection = document.getElementById('scoreSection');
-            scoreSection.style.display = (scoreSection.style.display === 'none' || scoreSection.style.display === '') ? 'block' : 'none';
-        }
-
-        function toggleAnswers() {
-            const answersSection = document.getElementById('answersSection');
-            answersSection.style.display = (answersSection.style.display === 'none' || answersSection.style.display === '') ? 'block' : 'none';
-        }
-    </script>
 </head>
 <body>
-    <header>
+    <header role="banner">
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg" style="background-color: #262626">
+        <nav class="navbar navbar-expand-lg navbar-custom fixed-top" aria-label="Main Navigation">
             <div class="container-fluid">
                 <!-- Left element -->
-                <div class="d-flex align-items-center">
-                    <a class="navbar-brand me-5" href="/">
-                        <img th:src="@{/media/logoFearSeer.png}" class="rounded me-3" height="35" alt="FearSeer Logo" loading="lazy" />
-                        <strong class="text-danger">FearSeer</strong>
-                    </a>
-                </div>
+                <a class="navbar-brand me-5" aria-current="page" href="/">
+                    <img th:src="@{/media/logoFearSeer.png}" class="rounded me-3" height="35" alt="FearSeer Logo" loading="lazy" />
+                    <strong class="text-danger">FearSeer</strong>
+                </a>
+                <!-- Navbar toggle button for mobile screens -->
+                <button
+                        class="navbar-toggler text-danger"
+                        type="button"
+                        data-mdb-toggle="collapse"
+                        data-mdb-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                >
+                    <i class="fas fa-bars"></i>
+                </button>
                 <!-- Right element -->
-                <div class="d-flex align-items-center">
-                    <a class="navbar-brand me-3 text-danger" href="/">
-                        Home
-                    </a>
-                    <a class="navbar-brand me-4 text-danger" href="/">
-                        About
-                    </a>
-                    <a class="navbar-brand me-4 text-danger" href="/horror-movies-with-quiz">
-                        Movies with Quiz
-                    </a>
-                    <!-- Logout Button -->
-                    <form th:action="@{/auth/logout}" method="post">
-                        <button type="submit" class="btn btn-outline-danger ms-2">Logout</button>
-                    </form>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="d-flex align-items-center ms-auto navbar-nav">
+                        <a class="navbar-brand me-3 text-danger nav-link" aria-current="page" href="/">
+                            Home
+                        </a>
+                        <a class="navbar-brand me-4 text-danger nav-link" href="/horror-movies-with-quiz">
+                            Take a Quiz
+                        </a>
+                        <!-- Profile Link -->
+                        <a class="navbar-brand me-4 text-danger nav-link" th:href="@{/profile/{userUsername}(userUsername=${user.userUsername})}">
+                                <span th:text="${user.userUsername}" class="pe-3">Username</span>
+                                <img th:src="'data:image/jpeg;base64,' + ${profilePictureBase64}" class="rounded-circle shadow-4-strong" height="35" alt="profile picture" loading="lazy">
+                        </a>
+                        <!-- Logout Button -->
+                        <form th:action="@{/auth/logout}" method="post" class="nav-link">
+                            <button type="submit" class="btn btn-outline-danger ms-2" aria-label="Log out button">Logout</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </nav>
         <!-- Background image -->
-        <div
-                class="p-5 text-center bg-image"
-                style="
-          background-image: url('/media/homepageBanner.jpg');
-          height: 400px;
-        "
-        >
-            <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+        <div class="p-5 text-center bg-image bg-image-custom">
+            <div class="mask mask-custom">
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <div>
-                        <h1 class="mb-3" style="color: #ffffff">FearSeer</h1>
+                        <h1 class="mb-3 text-light">FearSeer</h1>
                         <h4 class="mb-3 text-danger">Are you ready for another one? Or are you too scared...</h4>
                         <a data-mdb-ripple-init class="btn btn-danger btn-lg" href="/horror-movies-with-quiz" role="button"
                         >SEE MORE MOVIES</a
@@ -89,10 +75,10 @@
             </div>
         </div>
     </header>
-    <section class="vh-aut min-vh-100" style="background-color: #262626;">
+    <section class="vh-auto content-section" role="main">
         <div class="container-fluid">
             <div class="p-5 text-white">
-                <h1 th:text="'Your Quiz Result for:' + ${quiz.movieTitle}"
+                <h1 th:text="'Your Quiz Result for: ' + ${quiz.movieTitle}"
                     class="pb-5 d-flex justify-content-center align-items-center">Your Quiz Result:</h1>
                 <h5 class="d-flex justify-content-center align-items-center">Have you watched the movie yet? No cheating, you don't want to be spoiled!</h5>
             </div>
@@ -185,10 +171,11 @@
             type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
     ></script>
+    <script src="/script.js" type="text/javascript"></script>
 
-    <footer class="bg-body-tertiary bg-danger text-center text-lg-start">
+    <footer class="footer-custom">
         <!-- Copyright -->
-        <div class="text-center text-black p-3" style="background-color: rgba(10, 0, 0, 0.05);">
+        <div class="text-center text-black p-3">
             © 2024 Copyright: FearSeer
         </div>
         <!-- Copyright -->

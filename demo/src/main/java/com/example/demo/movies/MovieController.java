@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,6 +43,9 @@ public class MovieController {
         List<String> quizMovieTitles = movieService.getQuizMovieTitles();
         model.addAttribute("movies", horrorMovies.get("results"));
         model.addAttribute("quizMovieTitles", quizMovieTitles);
+        List<Integer> quizMovieIds = movieService.getQuizMovieIds();
+        model.addAttribute("movies", horrorMovies.get("results"));
+        model.addAttribute("quizMovieIds", quizMovieIds);
 
         // Get authenticated user details, if available
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -68,6 +72,12 @@ public class MovieController {
                     .collect(Collectors.toList());
             model.addAttribute("seenMoviesByUser", seenMovieIds);
 
+            // Convert profile picture to Base64 for display in the HTML
+            if (user.getProfilePicture() != null) {
+                String profilePictureBase64 = Base64.getEncoder().encodeToString(user.getProfilePicture());
+                model.addAttribute("profilePictureBase64", profilePictureBase64);
+            }
+
         }
 
         return "horror-movies";
@@ -80,6 +90,9 @@ public class MovieController {
         List<String> quizMovieTitles = movieService.getQuizMovieTitles();
         model.addAttribute("movies", searchResults.get("results"));
         model.addAttribute("quizMovieTitles", quizMovieTitles);
+        List<Integer> quizMovieIds = movieService.getQuizMovieIds();
+        model.addAttribute("movies", searchResults.get("results"));
+        model.addAttribute("quizMovieIds", quizMovieIds);
 
         // Get authenticated user details, if available
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -106,6 +119,12 @@ public class MovieController {
                     .collect(Collectors.toList());
             model.addAttribute("seenMoviesByUser", seenMovieIds);
 
+            // Convert profile picture to Base64 for display in the HTML
+            if (user.getProfilePicture() != null) {
+                String profilePictureBase64 = Base64.getEncoder().encodeToString(user.getProfilePicture());
+                model.addAttribute("profilePictureBase64", profilePictureBase64);
+            }
+
         }
         return "horror-movies";
     }
@@ -117,11 +136,17 @@ public class MovieController {
 
         model.addAttribute("movies", moviesWithQuiz);
 
-        // Get authenticated user details, if available
+        // Get authenticated user details
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User) {
             User user = (User) auth.getPrincipal();
             model.addAttribute("user", user);
+
+            // Convert profile picture to Base64 for display in the HTML
+            if (user.getProfilePicture() != null) {
+                String profilePictureBase64 = Base64.getEncoder().encodeToString(user.getProfilePicture());
+                model.addAttribute("profilePictureBase64", profilePictureBase64);
+            }
         }
         return "horror-movies-with-quiz";
     }

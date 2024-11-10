@@ -1,16 +1,118 @@
-body {
-    font-family: Arial, sans-serif;
+html, body {
+    height: 100%;
+    min-height: 100vh;
 }
 
-form {
-    margin: 20px;
+/* Auth Images */
+.auth-banner {
+    border-top-left-radius: .40rem;
+    border-bottom-left-radius: .40rem;
 }
 
-label {
-    display: block;
-    margin: 5px 0;
+/* Movie list */
+.movie-list {
+    list-style-type: none;
 }
 
-input {
-    margin-bottom: 10px;
+/* fixing padding */
+.no-banner-content {
+    padding-top: 70px;
 }
+
+/* Navbar */
+.navbar-custom {
+    background-color: #000000;
+}
+
+/* Background Image */
+.bg-image-custom {
+    background-image: url('./media/homepageBanner.jpg');
+    height: 400px;
+}
+
+.mask-custom {
+    background-color: hsla(0, 0%, 0%, 0.6);
+}
+
+/* Content Section */
+.content-section {
+    background-color: #262626;
+    min-height: 100vh;
+}
+
+.movie-poster {
+    height: 370px;
+    width: 270px;
+}
+/* Adjustments for phones */
+@media (max-width: 576px) {
+    .movie-poster {
+        height: 300px;
+        width: 200px;
+    }
+}
+
+/* Color Palette for FearSeer*/
+
+/* Footer */
+.footer-custom {
+    background-color: #ff3131;
+}
+
+/* Override Bootstrap "danger" color with #ff3131 */
+.btn-danger,
+.border-danger,
+.bg-danger,
+.text-bg-danger,
+.alert-danger,
+.list-group-item-danger {
+    background-color: #ff3131 !important;
+    border-color: #ff3131 !important;
+}
+
+
+.text-danger {
+    color: #ff3131 !important;
+}
+
+/* Specific button and text styling */
+.btn-outline-danger {
+    color: #ff3131 !important;
+    border-color: #ff3131 !important;
+}
+
+.btn-outline-danger:hover,
+.btn-outline-danger:focus,
+.btn-outline-danger:active {
+    color: #fff !important;
+    background-color: #ff3131 !important;
+    border-color: #ff3131 !important;
+}
+
+.bg-dark {
+    background-color: #000000 !important;
+}
+
+.btn-warning {
+    color: #000000 !important;
+    background-color: #ff3131 !important;
+    border-color: #ff3131 !important;
+}
+
+
+.nav-pills .nav-link.active {
+    background-color: #ffadad !important;
+    color: #591515 !important;
+}
+.nav-pills .nav-link {
+    color: #ff3131 !important;
+}
+.nav-pills .nav-link:hover {
+    background-color: #ffadad;
+}
+
+/* Hide elements by default */
+#scoreSection, #answersSection {
+    display: none;
+}
+

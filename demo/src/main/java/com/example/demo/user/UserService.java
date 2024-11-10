@@ -1,5 +1,8 @@
 package com.example.demo.user;
 
+import com.example.demo.likedMovies.LikedMovieService;
+import com.example.demo.seenMovies.SeenMovieService;
+import com.example.demo.watchLaterMovies.WatchLaterMovieService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +19,9 @@ public class UserService implements UserDetailsService {
 
     private final static String USER_NOT_FOUND_MESSAGE = "User with email %s not found";
     private final UserRepository userRepository;
+    private final LikedMovieService likedMovieService;
+    private final SeenMovieService seenMovieService;
+    private final WatchLaterMovieService watchLaterMovieService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -62,6 +68,11 @@ public class UserService implements UserDetailsService {
             if (profilePicture.getSize() > maxSize) {
                 throw new IllegalStateException("Profile picture must be less than 2 MB.");
             }
+            // Validate MIME type to allow only image files
+            String contentType = profilePicture.getContentType();
+            if (contentType == null || (!contentType.equals("image/jpeg") && !contentType.equals("image/png"))) {
+                throw new IllegalStateException("Invalid file type. Only JPG, JPEG, and PNG files are allowed.");
+            }
             // Convert and set the profile picture bytes
             user.setProfilePicture(profilePicture.getBytes());
         }
@@ -90,6 +101,16 @@ public class UserService implements UserDetailsService {
 
     public Optional<User> findByEmail(String username) {
         return userRepository.findByEmail(username);
+    }
+
+    public void deleteUser(User user) {
+        // First, remove all associations
+        likedMovieService.deleteLikedMoviesByUser(user);
+        watchLaterMovieService.deleteWatchLaterMoviesByUser(user);
+        seenMovieService.deleteSeenMoviesByUser(user);
+
+        // Then, delete the user
+        userRepository.delete(user);
     }
 
 }

@@ -1,74 +1,71 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" class="min-vh-100">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FearSeer - A site for horror movie lovers to discover movies, take quizzes, and track favorites.">
     <title>FearSeer - HomePage</title>
     <!-- Font Awesome -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-            rel="stylesheet"
-    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
-    <link
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <!-- MDB -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css"
-            rel="stylesheet"
-    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="/styles.css" rel="stylesheet" />
     <!-- FAVICON -->
     <link rel="icon" type="media/x-icon" href="/media/favicon.ico" />
 </head>
 <body>
-    <header>
+    <header role="banner">
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg" style="background-color: #262626">
+        <nav class="navbar navbar-expand-lg navbar-custom fixed-top" aria-label="Main Navigation">
             <div class="container-fluid">
                 <!-- Left element -->
-                <div class="d-flex align-items-center">
-                    <a class="navbar-brand me-5" aria-current="page" href="/">
-                        <img th:src="@{/media/logoFearSeer.png}" class="rounded me-3" height="35" alt="FearSeer Logo" loading="lazy" />
-                        <strong class="text-danger">FearSeer</strong>
-                    </a>
-                </div>
+                <a class="navbar-brand me-5" aria-current="page" href="/">
+                    <img th:src="@{/media/logoFearSeer.png}" class="rounded me-3" height="35" alt="FearSeer Logo" loading="lazy" />
+                    <strong class="text-danger">FearSeer</strong>
+                </a>
+                <!-- Navbar toggle button for mobile screens -->
+                <button
+                        class="navbar-toggler text-danger"
+                        type="button"
+                        data-mdb-toggle="collapse"
+                        data-mdb-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                >
+                    <i class="fas fa-bars"></i>
+                </button>
                 <!-- Right element -->
-                <div class="d-flex align-items-center">
-                    <a class="navbar-brand me-3 text-danger" aria-current="page" href="/">
-                        Home
-                    </a>
-                    <a class="navbar-brand me-4 text-danger" href="/">
-                        About
-                    </a>
-                    <a class="navbar-brand me-4 text-danger" href="/horror-movies-with-quiz">
-                        Movies with Quiz
-                    </a>
-                    <!-- Profile Link -->
-                    <div>
-                        <a class="navbar-brand me-4 text-danger" th:href="@{/profile/{userUsername}(userUsername=${user.userUsername})}">
-                            Profile
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="d-flex align-items-center ms-auto navbar-nav">
+                        <a class="navbar-brand me-3 text-danger nav-link active" aria-current="page" href="/">
+                            Home
                         </a>
+                        <a class="navbar-brand me-4 text-danger nav-link" href="/horror-movies-with-quiz">
+                            Take a Quiz
+                        </a>
+                        <!-- Profile Link -->
+                        <a class="navbar-brand me-4 text-danger nav-link" th:href="@{/profile/{userUsername}(userUsername=${user.userUsername})}">
+                            <span th:text="${user.userUsername}" class="pe-3">Username</span>
+                            <img th:src="'data:image/jpeg;base64,' + ${profilePictureBase64}" class="rounded-circle shadow-4-strong" height="35" alt="profile picture" loading="lazy">
+                        </a>
+                        <!-- Logout Button -->
+                        <form th:action="@{/auth/logout}" method="post" class="nav-link">
+                            <button type="submit" class="btn btn-outline-danger ms-2" aria-label="Log out button">Logout</button>
+                        </form>
                     </div>
-                    <!-- Logout Button -->
-                    <form th:action="@{/auth/logout}" method="post">
-                        <button type="submit" class="btn btn-outline-danger ms-2">Logout</button>
-                    </form>
                 </div>
             </div>
         </nav>
         <!-- Background image -->
-        <div
-                class="p-5 text-center bg-image"
-                style="
-          background-image: url('/media/homepageBanner.jpg');
-          height: 400px;
-        "
-        >
-            <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+        <div class="p-5 text-center bg-image bg-image-custom">
+            <div class="mask mask-custom">
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <div>
-                        <h1 class="mb-3" style="color: #ffffff">Welcome to FearSeer</h1>
+                        <h1 class="mb-3 text-light" >Welcome to FearSeer</h1>
                         <h4 class="mb-3 text-danger">Click below to see the list of movies which have a quiz.</h4>
                         <a data-mdb-ripple-init class="btn btn-danger btn-lg" href="/horror-movies-with-quiz" role="button"
                         >SEE LIST</a
@@ -79,7 +76,7 @@
         </div>
     </header>
     <!-- Content-->
-    <section class="vh-auto min-vh-100" style="background-color: #262626;">
+    <section class="vh-auto content-section" role="main">
         <div class="container-fluid">
             <div class="p-5 row d-flex justify-content-center align-items-center vh-auto">
                 <!-- Search form -->
@@ -88,37 +85,44 @@
                         <div class="input-group m-4">
                             <div class="form-outline me-2" data-mdb-input-init>
                                 <input type="text" name="query" id="form1" class="form-control text-white" />
-                                <label class="form-label text-white" for="form1">Search a movie...</label>
+                                <label class="form-label text-white" for="form1">Search for a movie...</label>
                             </div>
-                            <button type="submit" class="btn btn-danger" data-mdb-ripple-init>
+                            <button type="submit" class="btn btn-danger" data-mdb-ripple-init aria-label="search button">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
                     </form>
                 </div>
                 <!-- Popular Movies -->
-                <h1 class="m-2 text-white">Popular Movies :</h1>
-                <ul style="list-style-type: none;" class="d-flex justify-content-center row">
-                    <li th:each="movie : ${movies}" class="card m-4 vh-auto col-3 p-2 d-flex justify-content-center align-items-center bg-dark" >
+                <h1 class="m-2 text-white">Trending Horror Movies :</h1>
+                <ul class="movie-list d-flex justify-content-center row">
+                    <li th:each="movie : ${movies}" class="card m-4 vh-auto col-12 col-md-6 col-lg-4 col-xl-3 p-2 d-flex justify-content-center align-items-center bg-dark" >
                         <div>
                             <h4 th:text="${movie['title']}" class="d-flex justify-content-center rounded m-3 p-1 text-black text-bg-danger"></h4>
-                            <div class="d-flex justify-content-center
-">
-                                <img th:src="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}" alt="Movie Poster"
-                                class="rounded" height="370" width="270">
+                            <div class="d-flex justify-content-center">
+                                <img th:src="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}" alt="Movie Poster from TMDB API"
+                                class="rounded movie-poster">
                             </div>
-                            <div class="text-center">
+                            <div class="d-flex justify-content-center">
                                 <!-- Like/Unlike Button -->
                                 <form th:action="@{/liked-movies/like}" method="post" th:if="${!likedMoviesByUser.contains(movie['id'])}">
                                     <input type="hidden" name="movieTitle" th:value="${movie['title']}"/>
                                     <input type="hidden" name="moviePosterPath" th:value="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}"/>
                                     <input type="hidden" name="movieID" th:value="${movie['id']}"/>
-                                    <button type="submit" class="btn btn-danger mt-2">Like</button>
+                                    <button type="submit" class="btn btn-danger mt-2 me-2" aria-label="Like Movie button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="like button to add movie to liked movies list" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                                        </svg>
+                                    </button>
                                 </form>
 
                                 <form th:action="@{/liked-movies/unlike}" method="post" th:if="${likedMoviesByUser.contains(movie['id'])}">
                                     <input type="hidden" name="movieID" th:value="${movie['id']}"/>
-                                    <button type="submit" class="btn btn-outline-danger mt-2">Unlike</button>
+                                    <button type="submit" class="btn btn-warning mt-2 me-2" aria-label="Unlike Movie button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="like button to remove movie to liked movies list" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                                        </svg>
+                                    </button>
                                 </form>
 
                                 <!-- Watch Later Button -->
@@ -126,12 +130,21 @@
                                     <input type="hidden" name="movieTitle" th:value="${movie['title']}"/>
                                     <input type="hidden" name="moviePosterPath" th:value="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}"/>
                                     <input type="hidden" name="movieID" th:value="${movie['id']}"/>
-                                    <button type="submit" class="btn btn-warning mt-2">Watch Later</button>
+                                    <button type="submit" class="btn btn-danger mt-2 me-2" aria-label="watch later button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="button to add movie to watch later movies list" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                                            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                                        </svg>
+                                    </button>
                                 </form>
 
                                 <form th:action="@{/watch-later-movies/remove}" method="post" th:if="${watchLaterMoviesByUser.contains(movie['id'])}">
                                     <input type="hidden" name="movieID" th:value="${movie['id']}"/>
-                                    <button type="submit" class="btn btn-outline-warning mt-2">Remove Watch Later</button>
+                                    <button type="submit" class="btn btn-warning mt-2 me-2" aria-label="remove from watch later button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="button to remove movie to watch later movies list" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                        </svg>
+                                    </button>
                                 </form>
 
                                 <!-- Seen Button -->
@@ -139,22 +152,32 @@
                                     <input type="hidden" name="movieTitle" th:value="${movie['title']}"/>
                                     <input type="hidden" name="moviePosterPath" th:value="'https://image.tmdb.org/t/p/w500/' + ${movie['poster_path']}"/>
                                     <input type="hidden" name="movieID" th:value="${movie['id']}"/>
-                                    <button type="submit" class="btn btn-success mt-2">Seen</button>
+                                    <button type="submit" class="btn btn-danger mt-2" aria-label="seen movie button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="button to add movie to seen movies list" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                                        </svg>
+                                    </button>
                                 </form>
 
                                 <form th:action="@{/seen-movies/remove}" method="post" th:if="${seenMoviesByUser.contains(movie['id'])}">
                                     <input type="hidden" name="movieID" th:value="${movie['id']}"/>
-                                    <button type="submit" class="btn btn-outline-success mt-2">Remove Seen</button>
+                                    <button type="submit" class="btn btn-warning mt-2" aria-label="remove seen movie button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="button to remove movie to seen movies list" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                                        </svg>
+                                    </button>
                                 </form>
                             </div>
 
                             <!-- Conditionally show the button or message based on quiz availability -->
-                            <div th:if="${quizMovieTitles.contains(movie['title'])}">
+                            <div th:if="${quizMovieIds.contains(movie['id'])}">
                                 <a th:href="@{/quiz/{movieTitle}(movieTitle=${movie['title']})}"
                                    class="btn btn-outline-danger d-flex justify-content-center m-2">Take Quiz</a>
                             </div>
-                            <div th:unless="${quizMovieTitles.contains(movie['title'])}">
-                                <p class="text-black m-2 d-flex justify-content-center">Quiz doesn't exist yet</p>
+                            <div th:unless="${quizMovieIds.contains(movie['id'])}">
+                                <p class="text-light m-2 d-flex justify-content-center">Quiz doesn't exist yet</p>
                             </div>
                         </div>
                     </li>
@@ -170,9 +193,9 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
     ></script>
 
-    <footer class="bg-body-tertiary bg-danger text-center text-lg-start">
+    <footer class="footer-custom">
         <!-- Copyright -->
-        <div class="text-center text-black p-3" style="background-color: rgba(10, 0, 0, 0.05);">
+        <div class="text-center text-black p-3">
             © 2024 Copyright: FearSeer
         </div>
         <!-- Copyright -->

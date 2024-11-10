@@ -1,68 +1,209 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>User Profile</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="FearSeer - A site for horror movie lovers to discover movies, take quizzes, and track favorites.">
+        <title>FearSeer - Profile</title>
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+        <!-- MDB -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+        <!-- Custom CSS -->
+        <link href="/styles.css" rel="stylesheet" />
+        <!-- FAVICON -->
+        <link rel="icon" type="media/x-icon" href="/media/favicon.ico" />
+    </head>
 <body>
-<div class="container">
-    <h1>Profile of <span th:text="${user.userUsername}">Username</span></h1>
+    <header role="banner">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-custom fixed-top" aria-label="Main Navigation">
+            <div class="container-fluid">
+                <!-- Left element -->
+                <a class="navbar-brand me-5" aria-current="page" href="/">
+                    <img th:src="@{/media/logoFearSeer.png}" class="rounded me-3" height="35" alt="FearSeer Logo" loading="lazy" />
+                    <strong class="text-danger">FearSeer</strong>
+                </a>
+                <!-- Navbar toggle button for mobile screens -->
+                <button
+                        class="navbar-toggler text-danger"
+                        type="button"
+                        data-mdb-toggle="collapse"
+                        data-mdb-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                >
+                    <i class="fas fa-bars"></i>
+                </button>
+                <!-- Right element -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="d-flex align-items-center ms-auto navbar-nav">
+                        <a class="navbar-brand me-3 text-danger nav-link" href="/">
+                            Home
+                        </a>
+                        <a class="navbar-brand me-4 text-danger nav-link" href="/horror-movies-with-quiz">
+                            Take a Quiz
+                        </a>
+                        <!-- Profile Link -->
+                        <div>
+                            <a class="navbar-brand me-4 text-danger nav-link active" aria-current="page" th:href="@{/profile/{userUsername}(userUsername=${user.userUsername})}">
+                                <span th:text="${user.userUsername}" class="pe-3">Username</span>
+                                <img th:src="'data:image/jpeg;base64,' + ${profilePictureBase64}" class="rounded-circle shadow-4-strong" height="35" alt="profile picture" loading="lazy">
+                            </a>
+                        </div>
+                        <!-- Logout Button -->
+                        <form th:action="@{/auth/logout}" method="post" class="nav-link">
+                            <button type="submit" class="btn btn-outline-danger ms-2" aria-label="Log out button">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Content-->
+    <section class="vh-auto content-section no-banner-content" role="main">
+        <div class="container-fluid">
+            <div th:if="${success}" class="alert alert-success" role="alert">
+                <span th:text="${success}"></span>
+            </div>
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+                <span th:text="${error}"></span>
+            </div>
+            <div class="p-5 row d-flex justify-content-center align-items-center vh-auto">
+                <!-- profile picture, bio & settings button -->
+                <div class="card p-2">
+                    <div class="row">
+                        <div class="col-12 col-md-4 d-flex justify-content-center">
+                            <img th:src="'data:image/jpeg;base64,' + ${profilePictureBase64}" alt="Profile Picture" width="150" height="150">
+                        </div>
+                        <div class="col-12 col-md-6 me-4 text-black">
+                            <h1 th:text="${user.userUsername}"></h1>
+                            <hr>
+                            <p th:text="${user.bio}">bio</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center p-3">
+                    <a th:href="@{/profile/{userUsername}/settings(userUsername=${user.userUsername})}" class="btn btn-danger mt-3">Account Settings</a>
+                </div>
 
-    <div>
-        <!-- Display profile picture -->
-        <img th:if="${user.profilePicture != null}" th:src="'data:image/jpeg;base64,' + ${profilePictureBase64}" alt="Profile Picture" width="150" height="150">
 
-        <!-- Default profile picture -->
-        <img th:if="${user.profilePicture == null}" src="/media/default-profile.jpg" alt="Default Profile Picture" width="150" height="150">
-    </div>
+                <!-- Pills navs -->
+                <ul class="nav nav-pills pe-0 nav-justified mb-3" id="ex1" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a
+                                data-mdb-toggle="pill"
+                                class="nav-link active"
+                                id="ex1-tab-1"
+                                href="#ex1-liked-movies"
+                                role="tab"
+                                aria-controls="ex1-liked-movies"
+                                aria-selected="true"
+                        >Liked Movies</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a
+                                data-mdb-toggle="pill"
+                                class="nav-link"
+                                id="ex1-tab-2"
+                                href="#ex1-watch-later"
+                                role="tab"
+                                aria-controls="ex1-watch-later"
+                                aria-selected="false"
+                        >Movies to Watch Later</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a
+                                data-mdb-toggle="pill"
+                                class="nav-link"
+                                id="ex1-tab-3"
+                                href="#ex1-seen"
+                                role="tab"
+                                aria-controls="ex1-seen"
+                                aria-selected="false"
+                        >Movies Seen</a>
+                    </li>
+                </ul>
 
-    <!-- Profile update form -->
-    <form th:action="@{/profile/{userUsername}/update-profile(userUsername=${user.userUsername})}" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="bio">Bio</label>
-            <textarea class="form-control" id="bio" name="bio" th:text="${user.bio}"></textarea>
+                <!-- Pills content -->
+                <div class="tab-content" id="ex1-content">
+                    <!-- Liked Movies -->
+                    <div class="tab-pane fade show active" id="ex1-liked-movies" role="tabpanel" aria-labelledby="ex1-tab-1">
+                        <ul class="movie-list ps-0 d-flex justify-content-center row">
+                            <li th:each="likedMovie : ${likedMovies}" class="card m-4 vh-auto col-12 col-md-6 col-lg-4 col-xl-3 p-4 d-flex justify-content-center align-items-center bg-dark">
+                                <div>
+                                    <h4 th:text="${likedMovie.movieTitle}" class="d-flex justify-content-center rounded m-3 p-1 text-black text-bg-danger"></h4>
+                                    <div class="d-flex justify-content-center">
+                                        <img th:src="${likedMovie.moviePosterPath}" alt="Movie Poster" class="rounded movie-poster">
+                                    </div>
+                                    <!-- Remove Button -->
+                                    <div class="d-flex justify-content-center">
+                                        <form th:action="@{/liked-movies/unlike}" method="post">
+                                            <input type="hidden" name="movieID" th:value="${likedMovie.movieID}"/>
+                                            <button type="submit" class="btn btn-danger mt-2 me-2">Remove</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Watch Later Movies -->
+                    <div class="tab-pane fade" id="ex1-watch-later" role="tabpanel" aria-labelledby="ex1-tab-2">
+                        <ul class="movie-list ps-0 d-flex justify-content-center row">
+                            <li th:each="watchLaterMovie : ${watchLaterMovies}" class="card m-4 vh-auto col-12 col-md-6 col-lg-4 col-xl-3 p-4 d-flex justify-content-center align-items-center bg-dark">
+                                <div>
+                                    <h4 th:text="${watchLaterMovie.movieTitle}" class="d-flex justify-content-center rounded m-3 p-1 text-black text-bg-danger"></h4>
+                                    <div class="d-flex justify-content-center">
+                                        <img th:src="${watchLaterMovie.moviePosterPath}" alt="Movie Poster" class="rounded movie-poster">
+                                    </div>
+                                    <!-- Remove Button -->
+                                    <div class="d-flex justify-content-center">
+                                        <form th:action="@{/watch-later-movies/remove}" method="post">
+                                            <input type="hidden" name="movieID" th:value="${watchLaterMovie.movieID}"/>
+                                            <button type="submit" class="btn btn-danger mt-2 me-2">Remove</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Seen Movies -->
+                    <div class="tab-pane fade" id="ex1-seen" role="tabpanel" aria-labelledby="ex1-tab-3">
+                        <ul class="movie-list ps-0 d-flex justify-content-center row">
+                            <li th:each="seenMovie : ${seenMovies}" class="card m-4 vh-auto col-12 col-md-6 col-lg-4 col-xl-3 p-4 d-flex justify-content-center align-items-center bg-dark">
+                                <div>
+                                    <h4 th:text="${seenMovie.movieTitle}" class="d-flex justify-content-center rounded m-3 p-1 text-black text-bg-danger"></h4>
+                                    <div class="d-flex justify-content-center">
+                                        <img th:src="${seenMovie.moviePosterPath}" alt="Movie Poster" class="rounded movie-poster">
+                                    </div>
+                                    <!-- Remove Button -->
+                                    <div class="d-flex justify-content-center">
+                                        <form th:action="@{/seen-movies/remove}" method="post">
+                                            <input type="hidden" name="movieID" th:value="${seenMovie.movieID}"/>
+                                            <button type="submit" class="btn btn-danger mt-2 me-2">Remove</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
+    <!-- MDB JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js" type="text/javascript"></script>
+    <script src="/script.js" type="text/javascript"></script>
 
-        <div class="form-group">
-            <label for="profilePicture">Change Profile Picture</label>
-            <input type="file" id="profilePicture" name="profilePicture">
+    <footer class="footer-custom">
+        <!-- Copyright -->
+        <div class="text-center text-black p-3">
+            © 2024 Copyright: FearSeer
         </div>
-
-        <button type="submit" class="btn btn-primary">Update Profile</button>
-    </form>
-
-    <p th:if="${success}" th:text="${success}"></p>
-    <p th:if="${error}" th:text="${error}"></p>
-
-    <h2 class="mt-4 text-white">Liked Movies:</h2>
-    <ul class="list-unstyled">
-        <li th:each="likedMovie : ${likedMovies}" class="d-flex justify-content-between bg-dark p-3 m-2 rounded">
-            <div>
-                <h5 th:text="${likedMovie.movieTitle}" class="text-white"></h5>
-                <img th:src="${likedMovie.moviePosterPath}" alt="Movie Poster" class="rounded" height="150">
-            </div>
-        </li>
-    </ul>
-
-    <h2 class="mt-4 text-white">Watch Later Movies:</h2>
-    <ul class="list-unstyled">
-        <li th:each="watchLaterMovie : ${watchLaterMovies}" class="d-flex justify-content-between bg-dark p-3 m-2 rounded">
-            <div>
-                <h5 th:text="${watchLaterMovie.movieTitle}" class="text-white"></h5>
-                <img th:src="${watchLaterMovie.moviePosterPath}" alt="Movie Poster" class="rounded" height="150">
-            </div>
-        </li>
-    </ul>
-
-    <h2 class="mt-4 text-white">Seen Movies:</h2>
-    <ul class="list-unstyled">
-        <li th:each="seenMovie : ${seenMovies}" class="d-flex justify-content-between bg-dark p-3 m-2 rounded">
-            <div>
-                <h5 th:text="${seenMovie.movieTitle}" class="text-white"></h5>
-                <img th:src="${seenMovie.moviePosterPath}" alt="Movie Poster" class="rounded" height="150">
-            </div>
-        </li>
-    </ul>
-</div>
+        <!-- Copyright -->
+    </footer>
 </body>
 </html>

@@ -2,38 +2,71 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Login - FearSeer</title>
-    <link rel="stylesheet" href="/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FearSeer - A site for horror movie lovers to discover movies, take quizzes, and track favorites.">
+    <title>FearSeer - Login</title>
     <!-- Font Awesome -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-            rel="stylesheet"
-    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
-    <link
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <!-- MDB -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css"
-            rel="stylesheet"
-    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="/styles.css" rel="stylesheet" />
     <!-- FAVICON -->
-    <link rel="icon" type="image/x-icon" href="/media/favicon.ico" />
+    <link rel="icon" type="media/x-icon" href="/media/favicon.ico" />
 </head>
 <body>
-    <section class="vh-auto" style="background-color: #262626" >
+    <header role="banner">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-custom fixed-top" aria-label="Main Navigation">
+            <div class="container-fluid">
+                <!-- Left element -->
+                <a class="navbar-brand me-5" aria-current="page" href="/">
+                    <img th:src="@{/media/logoFearSeer.png}" class="rounded me-3" height="35" alt="FearSeer Logo" loading="lazy" />
+                    <strong class="text-danger">FearSeer</strong>
+                </a>
+                <!-- Navbar toggle button for mobile screens -->
+                <button
+                        class="navbar-toggler text-danger"
+                        type="button"
+                        data-mdb-toggle="collapse"
+                        data-mdb-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                >
+                    <i class="fas fa-bars"></i>
+                </button>
+                <!-- Right element -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="d-flex align-items-center ms-auto navbar-nav">
+                        <a class="navbar-brand me-3 text-danger nav-link" href="/">
+                            About
+                        </a>
+                        <a class="navbar-brand me-3 text-danger nav-link active" href="/auth/login">
+                            Sign in
+                        </a>
+                        <a class="navbar-brand me-3 text-danger nav-link" href="/auth/register">
+                            Sign up
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- content -->
+    <section class="vh-auto content-section no-banner-content" role="main">
         <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
         <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
         <div class="container">
             <div class="row d-flex justify-content-center align-items-center min-vh-100">
-                <div class="col">
+                <div class="col-10">
+                    <!-- login form -->
                     <div class="card card-login my-4">
                         <div class="row g-0">
                             <div class="col-xl-6 d-none d-xl-block">
-                                <img src="/media/logoBanner.png" class="img-fluid" alt="logo"
-                                     style="border-top-left-radius: .40rem; border-bottom-left-radius: .40rem;"/>
+                                <img src="/media/logoBanner.png" class="img-fluid auth-banner" alt="FearSeer logo Banner"/>
                             </div>
 
                             <div class="col-xl-6 d-flex justify-content-center align-items-center">
@@ -44,20 +77,22 @@
                                     </div>
 
                                     <form action="#" method="post" class="col-xl-7">
+                                        <!-- CSRF Token -->
+                                        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                                         <!-- Email input -->
                                         <div data-mdb-input-init class="form-outline mb-4">
-                                            <input type="email" id="username" name="username" class="form-control form-control-lg" required="required"/>
+                                            <input type="email" id="username" name="username" class="form-control form-control-lg" required="required" aria-required="true" aria-label="Enter your Email"/>
                                             <label class="form-label" for="username">Email</label>
                                         </div>
 
                                         <!-- Password input -->
                                         <div data-mdb-input-init class="form-outline mb-3">
-                                            <input type="password" id="password" name="password" class="form-control form-control-lg" required="required"/>
+                                            <input type="password" id="password" name="password" class="form-control form-control-lg" required="required"  aria-required="true" aria-label="Enter your Password"/>
                                             <label class="form-label" for="password">Password</label>
                                         </div>
 
                                         <div class="text-center text-lg-start mt-4 pt-2">
-                                            <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-danger btn-lg btn-block"
+                                            <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-danger btn-lg btn-block"  aria-label="Log into FearSeer"
                                             >Login</button>
                                         </div>
                                     </form>
@@ -77,12 +112,12 @@
             type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
     ></script>
-    <footer class="bg-body-tertiary bg-danger text-center text-lg-start">
+
+    <footer class="footer-custom">
         <!-- Copyright -->
-        <div class="text-center text-black p-3" style="background-color: rgba(10, 0, 0, 0.05);">
+        <div class="text-center text-black p-3">
             © 2024 Copyright: FearSeer
         </div>
-        <!-- Copyright -->
     </footer>
 </body>
 </html>

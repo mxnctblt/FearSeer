@@ -31,4 +31,9 @@ public class WatchLaterMovieService {
     public List<WatchLaterMovie> getWatchLaterMovies(User user) {
         return watchLaterMovieRepository.findByUser(user);
     }
+
+    public void deleteWatchLaterMoviesByUser(User user) {
+        List<WatchLaterMovie> watchLaterMovies = watchLaterMovieRepository.findByUser(user);
+        watchLaterMovieRepository.deleteAll(watchLaterMovies);
+    }
 }

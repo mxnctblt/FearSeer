@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FearSeer - A site for horror movie lovers to discover movies, take quizzes, and track favorites.">
+    <title>FearSeer - Profile Settings</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="/styles.css" rel="stylesheet" />
+    <!-- FAVICON -->
+    <link rel="icon" type="media/x-icon" href="/media/favicon.ico" />
+</head>
+<body>
+    <header role="banner">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-custom fixed-top" aria-label="Main Navigation">
+            <div class="container-fluid">
+                <!-- Left element -->
+                <a class="navbar-brand me-5" aria-current="page" href="/">
+                    <img th:src="@{/media/logoFearSeer.png}" class="rounded me-3" height="35" alt="FearSeer Logo" loading="lazy" />
+                    <strong class="text-danger">FearSeer</strong>
+                </a>
+                <!-- Navbar toggle button for mobile screens -->
+                <button
+                        class="navbar-toggler text-danger"
+                        type="button"
+                        data-mdb-toggle="collapse"
+                        data-mdb-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                >
+                    <i class="fas fa-bars"></i>
+                </button>
+                <!-- Right element -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="d-flex align-items-center ms-auto navbar-nav">
+                        <a class="navbar-brand me-3 text-danger nav-link" href="/">
+                            Home
+                        </a>
+                        <a class="navbar-brand me-4 text-danger nav-link" href="/horror-movies-with-quiz">
+                            Take a Quiz
+                        </a>
+                        <!-- Profile Link -->
+                        <div>
+                            <a class="navbar-brand me-4 text-danger nav-link" th:href="@{/profile/{userUsername}(userUsername=${user.userUsername})}">
+                                <span th:text="${user.userUsername}" class="pe-3">Username</span>
+                                <img th:src="'data:image/jpeg;base64,' + ${profilePictureBase64}" class="rounded-circle shadow-4-strong" height="35" alt="profile picture" loading="lazy">
+                            </a>
+                        </div>
+                        <!-- Logout Button -->
+                        <form th:action="@{/auth/logout}" method="post" class="nav-link">
+                            <button type="submit" class="btn btn-outline-danger ms-2" aria-label="Log out button">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Content-->
+    <section class="vh-auto content-section no-banner-content" role="main">
+        <div class="container">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-xl-8">
+                    <div class="card shadow-2-strong m-4">
+                        <div class="card-body p-5 text-center">
+                            <h3 class="fw-bold mb-5">Account Settings for: <span th:text="${user.userUsername}">Username</span></h3><!-- Display profile picture -->
+
+                            <form th:action="@{/profile/{userUsername}/update-profile(userUsername=${user.userUsername})}" method="post" enctype="multipart/form-data">
+
+                                <!-- profile picture -->
+                                <img th:src="'data:image/jpeg;base64,' + ${profilePictureBase64}" alt="Profile Picture" width="150" height="150">
+                                <div class="mb-4 form-group">
+                                    <label for="profilePicture">Change Your Profile Picture</label>
+                                    <input type="file" id="profilePicture" name="profilePicture" class="form-control form-control-lg">
+                                </div>
+                                <!-- Bio -->
+                                <div class="mb-4 form-group">
+                                    <label class="form-label" for="bio">Change Your Bio</label>
+                                    <textarea name="bio" id="bio" class="form-control form-control-lg"  th:text="${user.bio}"></textarea>
+                                </div>
+
+                                <!-- Update button -->
+                                <div class="d-flex justify-content-center pt-3">
+                                    <button type="reset" data-mdb-button-init class="btn btn-secondary-black btn-lg" aria-label="Reset button">Reset all</button>
+                                    <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-danger btn-lg ms-2" aria-label="update profile button">Update Profile</button>
+                                </div>
+                            </form>
+                            <!-- other buttons -->
+                            <div>
+                                <p class="mt-3 mb-0">You can also delete your account or go back to your profile:</p>
+                                <!-- Delete Profile button -->
+                                <form th:action="@{/profile/{userUsername}/delete(userUsername=${user.userUsername})}" method="post" onsubmit="return confirm('Are you sure you want to delete your account?');">
+                                    <button type="submit" class="btn btn-outline-danger mt-3" aria-label="delete account button">Delete Account</button>
+                                </form>
+                                <!-- Back to Profile Link -->
+                                <a th:href="@{/profile/{userUsername}(userUsername=${user.userUsername})}" class="btn btn-danger mt-3">Back to Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- MDB JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js" type="text/javascript"></script>
+    <script src="/script.js" type="text/javascript"></script>
+
+    <footer class="footer-custom">
+        <!-- Copyright -->
+        <div class="text-center text-black p-3">
+            © 2024 Copyright: FearSeer
+        </div>
+        <!-- Copyright -->
+    </footer>
+</body>
+</html>
