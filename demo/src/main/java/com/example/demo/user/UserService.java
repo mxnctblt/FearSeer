@@ -3,6 +3,7 @@ package com.example.demo.user;
 import com.example.demo.likedMovies.LikedMovieService;
 import com.example.demo.seenMovies.SeenMovieService;
 import com.example.demo.watchLaterMovies.WatchLaterMovieService;
+import com.example.demo.security.EmailValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,17 +24,26 @@ public class UserService implements UserDetailsService {
     private final SeenMovieService seenMovieService;
     private final WatchLaterMovieService watchLaterMovieService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final EmailValidator emailValidator;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(() ->
                 new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, email)));
     }
+
     public String signUpUser(User user) {
+
         // Check if email already exists
         boolean emailExists = userRepository.findByEmail(user.getEmail()).isPresent();
         if (emailExists) {
             throw new IllegalStateException("Email already taken");
+        }
+
+        // Check if email is valid
+        boolean isValidEmail = emailValidator.test(user.getEmail());
+        if (!isValidEmail) {
+            throw new IllegalStateException("Invalid email address");
         }
 
         // Check if username already exists
@@ -80,7 +90,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    private String validatePassword(String password) {
+    public String validatePassword(String password) {
         if (password.length() < 8) {
             return "Password must be at least 8 characters long.";
         }

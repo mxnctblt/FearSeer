@@ -29,6 +29,7 @@ public class WebSecurityConfig {
                 .formLogin(formLogin -> formLogin
                         .loginPage("/auth/login")
                         .defaultSuccessUrl("/", true)
+                        .failureUrl("/auth/login?error")
                         .permitAll()
                 )
                 .logout(logout -> logout

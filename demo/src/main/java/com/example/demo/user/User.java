@@ -26,10 +26,19 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 50)
     private String firstName;
+
+    @Column(nullable = false, length = 50)
     private String lastName;
+
+    @Column(unique = true, nullable = false, length = 30)
     private String username;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -63,7 +72,7 @@ public class User implements UserDetails {
             ClassPathResource resource = new ClassPathResource("static/media/default-profile.jpg");
             // Get the file size to check if it's too large
             long fileSize = resource.getFile().length(); // Get the size of the file
-            if (fileSize > 16 * 1024 * 1024) { // Assuming we want to cap at 16MB
+            if (fileSize > 16 * 1024 * 1024) {
                 throw new IllegalStateException("Default profile picture is too large.");
             }
             return Files.readAllBytes(resource.getFile().toPath());

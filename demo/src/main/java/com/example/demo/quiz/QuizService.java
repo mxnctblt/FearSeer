@@ -44,6 +44,7 @@ public class QuizService {
     public int calculateScore(Map<String, Object> userAnswers, Map<String, Object> correctAnswers) {
         int score = 0;
 
+        // compare the user's answers with the correct ones
         if (userAnswers.get("deathCount").equals(correctAnswers.get("deathCount"))) score++;
         if (userAnswers.get("lifeCount").equals(correctAnswers.get("lifeCount"))) score++;
         if (userAnswers.get("mainCharacter").equals(correctAnswers.get("mainCharacter"))) score++;

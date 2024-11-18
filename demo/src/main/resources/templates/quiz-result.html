@@ -82,16 +82,16 @@
                     class="pb-5 d-flex justify-content-center align-items-center">Your Quiz Result:</h1>
                 <h5 class="d-flex justify-content-center align-items-center">Have you watched the movie yet? No cheating, you don't want to be spoiled!</h5>
             </div>
-            <div class="p-5 d-flex justify-content-center align-items-center">
-                <div class="card col-4 pb-4 pt-2 d-flex justify-content-center align-items-center bg-danger">
+            <div class="p-1 p-xl-5 d-flex justify-content-center align-items-center">
+                <div class="card col-12 col-xl-4 pb-4 pt-2 d-flex justify-content-center align-items-center bg-danger">
                     <button onclick="toggleScore()" class="btn btn-black btn-lg m-4">See Your Score</button>
                     <div id="scoreSection">
                         <strong th:text="'You scored ' + ${quiz.score} + ' out of 10 (' + (${quiz.score} * 10) + '%)'" class="text-black">You scored: X out of 10 (Y%)</strong>
                     </div>
                 </div>
             </div>
-            <div class="p-5 d-flex justify-content-center align-items-center">
-                <div class="card col-8 pb-4 pt-2 d-flex justify-content-center align-items-center bg-danger">
+            <div class="p-1 p-xl-5 d-flex justify-content-center align-items-center">
+                <div class="card col-12 col-xl-8 pb-4 pt-2 d-flex justify-content-center align-items-center bg-danger">
                     <button onclick="toggleAnswers()" class="btn btn-black btn-lg m-4">See Correct Answers</button>
                     <div class="text-black p-5" id="answersSection">
                         <h2 class="pb-3">Here are the correct answers:</h2>

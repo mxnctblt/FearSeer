@@ -77,11 +77,12 @@
     </header>
     <section class="vh-auto content-section" role="main">
         <div class="container-fluid d-flex justify-content-center align-items-center">
-            <div class="p-5 col-9">
+            <div class="p-1 p-xl-5 col-12 col-xl-9">
                 <div class="card bg-danger p-5 m-4 d-flex justify-content-center align-items-center">
                     <h1 class="m-2 mb-5 text-white p-3 rounded bg-dark">Quiz for: [[${movieTitle}]]</h1>
 
                     <form action="#" method="post" class="text-black">
+
                         <!-- CSRF Token -->
                         <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 

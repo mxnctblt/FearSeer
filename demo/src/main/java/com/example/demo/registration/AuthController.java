@@ -27,7 +27,7 @@ public class AuthController {
     public String login(@RequestParam(value = "error", required = false) String error, Model model) {
         // Redirect if user is already authenticated
         if (isAuthenticated()) {
-            return "redirect:/"; // Redirect to homepage or dashboard
+            return "redirect:/";
         }
         if (error != null) {
             model.addAttribute("error", "Invalid email or password.");
@@ -40,7 +40,7 @@ public class AuthController {
     public String register(Model model) {
         // Redirect if user is already authenticated
         if (isAuthenticated()) {
-            return "redirect:/"; // Redirect to homepage or dashboard
+            return "redirect:/";
         }
         String firstHorrorMoviePoster = movieService.getFirstHorrorMoviePoster();
         model.addAttribute("posterUrl", firstHorrorMoviePoster);

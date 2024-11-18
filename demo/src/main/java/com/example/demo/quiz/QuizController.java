@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.Base64;
@@ -55,7 +54,6 @@ public class QuizController {
     public String submitQuiz(
             @PathVariable String movieTitle,
             @RequestParam Map<String, String> answers,
-            RedirectAttributes redirectAttributes,
             Principal principal
     ) {
         // Get correct answers from the JSON
@@ -84,6 +82,7 @@ public class QuizController {
 
         // Create and save a new Quiz entity
         Quiz quiz = new Quiz();
+
         quiz.setMovieTitle(movieTitle);
         quiz.setDeathCountPrediction(Integer.parseInt(answers.get("deathCount")));
         quiz.setLifeCountPrediction(Integer.parseInt(answers.get("lifeCount")));
@@ -100,6 +99,7 @@ public class QuizController {
 
         Quiz savedQuiz = quizRepository.save(quiz);
 
+        // Redirect the user to their result page
         return "redirect:/quiz/" + movieTitle + "/quiz-result/" + savedQuiz.getId();
     }
 

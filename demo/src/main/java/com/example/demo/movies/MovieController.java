@@ -49,8 +49,7 @@ public class MovieController {
 
         // Get authenticated user details, if available
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User) {
-            User user = (User) auth.getPrincipal();
+        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User user) {
             model.addAttribute("user", user);
 
             // Fetch liked, watch later, and seen movie IDs for the current user
@@ -96,8 +95,7 @@ public class MovieController {
 
         // Get authenticated user details, if available
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User) {
-            User user = (User) auth.getPrincipal();
+        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User user) {
             model.addAttribute("user", user);
 
             // Fetch liked, watch later, and seen movies IDs for the current user
@@ -138,8 +136,7 @@ public class MovieController {
 
         // Get authenticated user details
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User) {
-            User user = (User) auth.getPrincipal();
+        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User user) {
             model.addAttribute("user", user);
 
             // Convert profile picture to Base64 for display in the HTML
