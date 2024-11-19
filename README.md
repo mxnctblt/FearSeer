@@ -58,7 +58,7 @@ Once a [user](./demo/src/main/java/example/demo/user) registers, they will be ad
 The Homepage uses the [TMDB API](https://developer.themoviedb.org/reference/intro/getting-started) to show the popular horror [movies](./demo/src/main/java/example/demo/movies) of the moment. There is also the possibility to search for a movie in particular with the search bar.
 
 <div class="bg-image mb-5">
-    <img src="./demo/src/main/resources/static/media/SearchPreview.png" class="img-fluid" alt="about image" />
+    <img src="./demo/src/main/resources/static/media/homepagePreview2.png" class="img-fluid" alt="about image" />
 </div>
 
 ### Quiz
@@ -68,6 +68,14 @@ User are able to click directly on the button below the posters to take the quiz
 
 <div class="bg-image mb-5">
     <img src="./demo/src/main/resources/static/media/QuizPreview.png" class="img-fluid" alt="about image" />
+</div>
+
+### Profile
+
+The last functionnality added to Fearseer is the user profile! Now users can have their own profile with a bio and profile picture. On top of that, users can movies in the following lists: favorites, movies to watch later, and movies already seen. As such, they will be able to keep track of their horror movies watchlist easily by simply checking their profile where they will be shown.
+
+<div class="bg-image mb-5">
+    <img src="./demo/src/main/resources/static/media/ProfilePreview.png" class="img-fluid" alt="about image" />
 </div>
 
 ### Security
